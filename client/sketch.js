@@ -13,7 +13,7 @@ const gHeight = 720;
 const FPS = 30;
 
 var player;
-var ground;
+var terrain;
 
 function setup() {
     frameRate(FPS);
@@ -21,14 +21,9 @@ function setup() {
     createCanvas(gWidth, gHeight);
     engine = Engine.create();
     world = engine.world;
-    ground = new Ground();
     player = new Player();
-    world.gravity.y = 2;
-    Matter.Events.on(engine, 'collisionStart', function(event) {
-      console.log(event.pairs)
-      var pairs = event.pairs;
-      if (pairs.length) console.log("colision betwen " + pairs[0].bodyA.label + " - " + pairs[0].bodyB.label);
- }); 
+    terrain = new Terrain(this.player); // passes player to check jump
+    world.gravity.y = 3;
 }
 
 function draw() {
@@ -36,5 +31,5 @@ function draw() {
     background(51);
     player.update();
     player.draw();
-    ground.draw();
+    terrain.draw();
 }

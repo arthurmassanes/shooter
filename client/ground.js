@@ -3,7 +3,7 @@ class Ground {
         const options = {
             isStatic: true,
             label: 'ground',
-            friction: 0
+            // friction: 0
         };
         this.height = 100;
         this.width = gWidth * 2;
