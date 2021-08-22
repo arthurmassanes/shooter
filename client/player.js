@@ -29,6 +29,17 @@ class Player {
             Body.applyForce(this.body, this.body.position, { x: 0, y: this.jumpHeight });
             this.isSteppingGround = false;
         }
+        this.stayInScreen();
+    }
+
+    // constrain the player to the screen
+    stayInScreen() {
+        const halfBody = this.width / 2;
+        if (this.body.position.x <= 0 - halfBody) {
+            Body.setPosition(this.body, { x: gWidth, y: this.body.position.y });
+        } else if (this.body.position.x >= gWidth + halfBody) {
+            Body.setPosition(this.body, { x: 0, y: this.body.position.y });
+        }
     }
 
     draw() {

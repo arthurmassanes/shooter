@@ -29,9 +29,10 @@ class Terrain {
             const width = gWidth / 3;
             const x = random(0, gWidth);
             const y = random(gHeight / 2, gHeight);
+            const bodyColor = random(200, 255);
             const body = Bodies.rectangle(x, y, width, height, options);
             World.add(world, body);
-            this.bodies.push({  ...body, height, width });
+            this.bodies.push({ ...body, height, width, bodyColor });
         }
     }
 
@@ -39,9 +40,9 @@ class Terrain {
         this.ground.draw();
 
         push();
-        fill("red");
         rectMode(CENTER);
         for (const body of this.bodies) {
+            fill(body.bodyColor);
             rect(body.position.x, body.position.y, body.width, body.height);
         }
         pop();
