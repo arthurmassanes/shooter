@@ -2,27 +2,34 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>blob</title>
+    <title>shooter</title>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js" integrity="sha512-3CP+e7z5ieYYTIyvRvV3eGVYR67yXg5V2mWfg8pEJJd2mlh8tG/cnDv5scTmRztEYHTksBlpPOmxFOiMtHfZdQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.sound.min.js"></script> -->
     <meta charset="utf-8" />    
     <style>
       canvas {
-        vertical-align: top;
-        display: block;
-        
+          display: block;
+          width: 100%;
+          height: 100%;
+          padding-left: 0;
+          padding-right: 0;
+          margin-left: auto;
+          margin-right: auto;
       }
       html, body {
+        width:  100%;
+        height: 100%;
         margin: 0;
         padding: 0;
-      }
-      canvas {
-        display: block;
       }
     </style>
   </head>
   <body>
     <script type="text/javascript" src="sketch.js"></script>
+    <script type="text/javascript" src="player.js"></script>
+    <script type="text/javascript" src="ground.js"></script>
+    <script type="text/javascript" src="controls.js"></script>
   </body>
 </html>
