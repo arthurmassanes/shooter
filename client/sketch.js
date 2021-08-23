@@ -12,24 +12,25 @@ const gWidth = 1280;
 const gHeight = 720;
 const FPS = 30;
 
-var player;
-var terrain;
+var game;
 
 function setup() {
     frameRate(FPS);
     angleMode(RADIANS);  
     createCanvas(gWidth, gHeight);
+
+    // physics engine
     engine = Engine.create();
     world = engine.world;
-    player = new Player();
-    terrain = new Terrain(this.player); // passes player to check jump
     world.gravity.y = 3;
+
+    game = new Game();
 }
 
 function draw() {
     Engine.update(engine);
+    game.update();
+
     background(51);
-    player.update();
-    player.draw();
-    terrain.draw();
+    game.draw();
 }

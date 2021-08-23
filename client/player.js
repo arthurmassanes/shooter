@@ -24,7 +24,7 @@ class Player {
         if (isPressingRight())
             Body.applyForce(this.body, this.body.position, { x: this.speed, y: 0 });
 
-        // const isCollidingWithGround = Matter.SAT.collides(this.body, ground.body).collided;
+        // const isCollidingWithGround = Matter.SAT.collides(this.body, terrain.ground.body).collided;
         if (isPressingJump() && this.isSteppingGround) {
             Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
             this.isSteppingGround = false;
