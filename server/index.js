@@ -4,10 +4,14 @@ const io = require("socket.io")(httpServer, {
     cors: { origins: ["*"], methods: ["GET", "POST"] }
 })
 
+const maps = require("./maps");
+const map = maps.random();
+console.log(maps);
+
 io.on("connection", (socket) => {
     const address = socket.request.connection.remoteAddress;
     console.log(`New connection from address ${address}`);
-    socket.emit("welcome", 'hello')
+    socket.emit("map", map)
     // socket.on("event", (data) => {
     // });
     socket.on("disconnect", () => {

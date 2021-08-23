@@ -2,8 +2,6 @@
 class Terrain {
     constructor(player) {
         this.bodies = [];
-        this.ground = new Ground();
-        this.generateObstacles();
         // setup collisions between ground and player for jump authorization
         Matter.Events.on(engine, 'collisionStart', function(event) {
             var pairs = event.pairs;
@@ -17,34 +15,44 @@ class Terrain {
        });      
     }
 
-    // this should be created using server data
-    generateObstacles() {
-        const options = {
-            isStatic: true,
-            label: 'ground',
-            // friction: 0
-        };
+    // deletes game objects (useful to rebuild the map)
+    removeObstacles() {
+        const worldBodies = [...world.bodies]
+        worldBodies.map((body) => {
+            if (body.label == "ground") {
+                this.bodies = this.bodies.filter(b => b.id != body.id);
+                World.remove(world, body);
+            }
+        });
+    }
 
-        for (let i = 0; i < 3; i++) {
-            const height = random(10, 30);
-            const width = random(gWidth / 4, gWidth / 3);
-            const x = random(0, gWidth);
-            const y = random(gHeight / 2, gHeight - this.ground.height);
-            const bodyColor = random(200, 255);
-            const body = Bodies.rectangle(x, y, width, height, options);
+    generateObstacles(serverData) {
+        this.removeObstacles();
+        for (const obstacle of serverData) {
+            const {
+                position,
+                isStatic,
+                height,
+                width,
+                color 
+            } = obstacle;
+
+            const options = {
+                label: 'ground',
+                isStatic,
+            };
+            const body = Bodies.rectangle(position.x, position.y, width, height, options);
             World.add(world, body);
-            this.bodies.push({ ...body, height, width, bodyColor });
+            this.bodies.push({ ...body, height, width, color });
         }
     }
 
     draw() {
-        this.ground.draw();
-
         push();
         rectMode(CENTER);
-        for (const body of this.bodies) {
-            fill(body.bodyColor);
-            rect(body.position.x, body.position.y, body.width, body.height);
+        for (const b of this.bodies) {
+            fill(b.color);
+            rect(b.position.x, b.position.y, b.width, b.height);
         }
         pop();
     }
