@@ -2,18 +2,18 @@ class Player {
     constructor(x = 500, y = 300) {
         const options = {
             label: 'player',
-            // restitution: 0.1,
+            restitution: 0.2,
             inertia: Infinity,
             frictionAir: 0.05,
-            friction: 0.1,
-            // density: 0.0015
+            friction: 0,
+            density: 0.002
         };
         this.isSteppingGround = false;
         this.speed = 0.02;
         this.height = 80;
         this.width = 50;
         this.xMaxVelocity = 30; // the fastest the player can accelerate
-        this.jumpHeight = -0.2;
+        this.jumpHeight = 0.4;
         this.body = Bodies.rectangle(x, y, this.width, this.height, options);
         World.add(world, this.body);
     }
@@ -26,7 +26,7 @@ class Player {
 
         // const isCollidingWithGround = Matter.SAT.collides(this.body, ground.body).collided;
         if (isPressingJump() && this.isSteppingGround) {
-            Body.applyForce(this.body, this.body.position, { x: 0, y: this.jumpHeight });
+            Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
             this.isSteppingGround = false;
         }
         this.stayInScreen();
