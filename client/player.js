@@ -13,7 +13,7 @@ class Player {
         this.height = 80;
         this.width = 50;
         this.xMaxVelocity = 30; // the fastest the player can accelerate
-        this.jumpHeight = 0.4;
+        this.jumpHeight = 0.42;
         this.body = Bodies.rectangle(x, y, this.width, this.height, options);
         World.add(world, this.body);
     }
