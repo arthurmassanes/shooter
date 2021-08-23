@@ -1,7 +1,9 @@
+
 // Terrain generator
 class Terrain {
     constructor(player) {
         this.bodies = [];
+        this.isLoading = true;
         // setup collisions between ground and player for jump authorization
         Matter.Events.on(engine, 'collisionStart', function(event) {
             var pairs = event.pairs;
@@ -20,8 +22,9 @@ class Terrain {
         const worldBodies = [...world.bodies]
         worldBodies.map((body) => {
             if (body.label == "ground") {
-                this.bodies = this.bodies.filter(b => b.id != body.id);
+                this.bodies = this.bodies.filter(b => b.body.id != body.id);
                 World.remove(world, body);
+                console.log('deleted body');
             }
         });
     }
@@ -43,17 +46,22 @@ class Terrain {
             };
             const body = Bodies.rectangle(position.x, position.y, width, height, options);
             World.add(world, body);
-            this.bodies.push({ ...body, height, width, color });
+            this.bodies.push({ body, height, width, color });
         }
+        this.isLoading = false;
     }
 
     draw() {
-        push();
-        rectMode(CENTER);
         for (const b of this.bodies) {
+            const pos = b.body.position;
+            const angle = b.body.angle;
+            push();
+            translate(pos.x, pos.y);
+            rotate(angle);
+            rectMode(CENTER);
             fill(b.color);
-            rect(b.position.x, b.position.y, b.width, b.height);
+            rect(0, 0, b.width, b.height);
+            pop();
         }
-        pop();
     }
 }

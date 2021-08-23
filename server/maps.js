@@ -18,7 +18,7 @@ module.exports = {
                 isStatic: true,
                 height: 30,
                 width: 500,
-                color: "#993636"
+                color: "#993436"
             },
             {
                 position: { x: 200, y: 500 },

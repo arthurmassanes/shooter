@@ -1,9 +1,9 @@
 class Player {
     constructor(x = 500, y = 300) {
         const options = {
+            inertia: Infinity, // so it dont rotate
             label: 'player',
             restitution: 0.2,
-            inertia: Infinity,
             frictionAir: 0.05,
             friction: 0,
             density: 0.002

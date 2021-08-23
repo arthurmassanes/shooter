@@ -7,12 +7,12 @@ class Game {
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
     }
 
+    update() {
+        this.player.update();
+    }
+
     draw() {
         this.player.draw();
         this.terrain.draw();
-    }
-
-    update() {
-        this.player.update();
     }
 }
