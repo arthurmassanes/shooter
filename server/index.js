@@ -7,7 +7,16 @@ const io = require("socket.io")(httpServer, {
 const maps = require("./maps/maps");
 const map = maps.random();
 
-const players = [];
+// players with id as key
+const players = {};
+
+const onPlayerInfo = (playerInfo, socket) => {
+    const id = socket.id;
+    const { position, velocity } = playerInfo;
+    players[id] = { position, velocity };
+    console.log(players, socket.id);
+    socket.emit('players', players);
+}
 
 io.on("connection", (socket) => {
     const address = socket.request.connection.remoteAddress;
@@ -18,9 +27,10 @@ io.on("connection", (socket) => {
     // socket.on("event", (data) => {
     // });
 
-
+    socket.on("playerInfo", (d) => onPlayerInfo(d, socket));
     socket.on("disconnect", () => {
-        console.log(`Client disconnected: ${address}`)
+        delete players[socket.id];
+        console.log(`Client disconnected: ${address}`);
     });
 })
 

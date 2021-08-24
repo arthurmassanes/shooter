@@ -17,6 +17,17 @@ class Player {
         World.add(world, this.body);
     }
 
+    // emit playerInfo data to server
+    heartbeat() {
+        const body = this.body;
+        if (body) {
+            socket.emit("playerInfo", {
+                position: this.body.position,
+                velocity: this.body.velocity,
+            })
+        }
+    }
+
     update() {
         if (isPressingLeft())
             Body.applyForce(this.body, this.body.position, { x: -this.speed, y: 0 });

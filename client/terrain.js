@@ -46,7 +46,6 @@ class Terrain {
                 label: 'ground',
                 isStatic,
             };
-            console.log(restitution);
             const body = Bodies.rectangle(position.x, position.y, width, height, options);
             // optional parameters
             if (restitution) body.restitution = restitution;
