@@ -5,6 +5,7 @@ class Game {
 
         // create obstacles based on current map
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
+        socket.on("players", (data) => console.log('players', data));
     }
 
     update() {

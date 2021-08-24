@@ -36,7 +36,9 @@ class Terrain {
                 position,
                 isStatic,
                 height,
+                restitution,
                 width,
+                angle,
                 color 
             } = obstacle;
 
@@ -44,7 +46,12 @@ class Terrain {
                 label: 'ground',
                 isStatic,
             };
+            console.log(restitution);
             const body = Bodies.rectangle(position.x, position.y, width, height, options);
+            // optional parameters
+            if (restitution) body.restitution = restitution;
+            if (angle) body.angle = angle;
+
             World.add(world, body);
             this.bodies.push({ body, height, width, color });
         }

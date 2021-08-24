@@ -3,7 +3,6 @@ class Player {
         const options = {
             inertia: Infinity, // so it dont rotate
             label: 'player',
-            restitution: 0.2,
             frictionAir: 0.05,
             friction: 0,
             density: 0.002
