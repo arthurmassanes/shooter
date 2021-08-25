@@ -39,15 +39,14 @@ module.exports = {
                 isStatic: true,
                 height: 30,
                 width: 50,
-                restitution: 0.99,
+                restitution: 0.6,
                 color: "lightblue"
             },
             {
-                position: { x: 600, y: 250 },
+                position: { x: 700, y: 150 },
                 isStatic: true,
                 height: 30,
-                width: 200,
-                restitution: 0.99,
+                width: 300,
                 color: "grey"
             },
         ]
