@@ -24,7 +24,6 @@ class Terrain {
             if (body.label == "ground") {
                 this.bodies = this.bodies.filter(b => b.body.id != body.id);
                 World.remove(world, body);
-                console.log('deleted body');
             }
         });
     }

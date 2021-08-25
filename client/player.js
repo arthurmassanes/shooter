@@ -27,9 +27,7 @@ class Player {
     // emit playerInfo data to server
     heartbeat() {
         const body = this.body;
-        console.log(this.body.velocity, this.isMoving());
         if (body && (this.isMoving() || this.emitedPackages < 5)) {
-            console.log('emit');
             socket.emit("playerInfo", {
                 position: this.body.position,
                 velocity: this.body.velocity,

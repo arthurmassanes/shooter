@@ -39,7 +39,6 @@ class Game {
         textSize(24);
         fill("white");
         text(`connected players: ${Object.keys(this.otherPlayers).length + 1}`, 20, 20);
-        text(`sleeping: ${!this.player.isMoving()}`, 20, 200);
         if (this.terrain.isLoading) {
             text(`Loading obstacles...`, 20, 50);
             world.gravity.y = 0;
