@@ -42,41 +42,13 @@ module.exports = {
                 restitution: 0.99,
                 color: "lightblue"
             },
-            // Non static
             {
-                position: { x: 200, y: 200 },
-                isStatic: false,
-                height: 10,
-                width: 10,
-                color: "yellow"
-            },
-            {
-                position: { x: 210, y: 200 },
-                isStatic: false,
-                height: 10,
-                width: 10,
-                color: "yellow"
-            },
-            {
-                position: { x: 220, y: 200 },
-                isStatic: false,
-                height: 10,
-                width: 10,
-                color: "yellow"
-            },
-            {
-                position: { x: 200, y: 210 },
-                isStatic: false,
-                height: 10,
-                width: 10,
-                color: "yellow"
-            },
-            {
-                position: { x: 200, y: 200 },
-                isStatic: false,
-                height: 10,
-                width: 10,
-                color: "yellow"
+                position: { x: 600, y: 250 },
+                isStatic: true,
+                height: 30,
+                width: 200,
+                restitution: 0.99,
+                color: "grey"
             },
         ]
     ],
