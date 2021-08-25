@@ -4,12 +4,13 @@ class Player {
             inertia: Infinity, // so it dont rotate
             label: 'player',
             frictionAir: 0.05,
-            friction: 0,
+            friction: 0.5,
             density: 0.002
         };
         this.isSteppingGround = false;
-        this.speed = 0.02;
-        this.height = 80;
+        this.speed = 0.1;
+        this.airSpeed = 0.02;
+        this.height = 100;
         this.width = 50;
         this.xMaxVelocity = 30; // the fastest the player can accelerate
         this.jumpHeight = 0.42;
@@ -29,10 +30,11 @@ class Player {
     }
 
     update() {
+        const speed = this.isSteppingGround ? this.speed : this.airSpeed;
         if (isPressingLeft())
-            Body.applyForce(this.body, this.body.position, { x: -this.speed, y: 0 });
+            Body.applyForce(this.body, this.body.position, { x: -speed, y: 0 });
         if (isPressingRight())
-            Body.applyForce(this.body, this.body.position, { x: this.speed, y: 0 });
+            Body.applyForce(this.body, this.body.position, { x: speed, y: 0 });
 
         // const isCollidingWithGround = Matter.SAT.collides(this.body, terrain.ground.body).collided;
         if (isPressingJump() && this.isSteppingGround) {

@@ -11,6 +11,7 @@ var Engine = Matter.Engine,
 const gWidth = 1280;
 const gHeight = 720;
 const FPS = 30;
+const YGRAVITY = 3;
 
 var game;
 
@@ -22,7 +23,7 @@ function setup() {
     // physics engine
     engine = Engine.create();
     world = engine.world;
-    world.gravity.y = 3;
+    world.gravity.y = YGRAVITY;
 
     game = new Game();
 }
