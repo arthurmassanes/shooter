@@ -13,19 +13,28 @@ class Player {
         this.height = 100;
         this.width = 50;
         this.xMaxVelocity = 30; // the fastest the player can accelerate
-        this.jumpHeight = 0.42;
+        this.jumpHeight = 0.55;
+        this.emitedPackages = 0;
         this.body = Bodies.rectangle(x, y, this.width, this.height, options);
         World.add(world, this.body);
+    }
+
+    isMoving() {
+        const vel = this.body.velocity;
+        return (vel.x !== 0 || vel.y !== 0)
     }
 
     // emit playerInfo data to server
     heartbeat() {
         const body = this.body;
-        if (body) {
+        console.log(this.body.velocity, this.isMoving());
+        if (body && (this.isMoving() || this.emitedPackages < 5)) {
+            console.log('emit');
             socket.emit("playerInfo", {
                 position: this.body.position,
                 velocity: this.body.velocity,
-            })
+            });
+            this.emitedPackages += 1;
         }
     }
 

@@ -9,6 +9,8 @@ const map = maps.random();
 
 // players with id as key
 const players = {};
+const refreshInterval = 1000 / 5; // five time every 1000 milliseconds
+
 
 const onPlayerInfo = (playerInfo, socket) => {
     const id = socket.id;
@@ -21,9 +23,10 @@ const onPlayerInfo = (playerInfo, socket) => {
 io.on("connection", (socket) => {
     const address = socket.request.connection.remoteAddress;
     console.log(`New connection from address ${address}`, socket.id);
+    socket.emit("map", map);
     
-    socket.emit('players', players);
-    socket.emit("map", map)
+    // update player about other clients
+    setInterval(() => socket.emit('players', players), refreshInterval);
     // socket.on("event", (data) => {
     // });
 
