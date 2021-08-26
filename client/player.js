@@ -1,6 +1,6 @@
 class Player {
     constructor(x = 500, y = 300) {
-        const options = {
+        this.options = {
             inertia: Infinity, // so it dont rotate
             label: 'player',
             frictionAir: 0.05,
@@ -15,7 +15,7 @@ class Player {
         this.xMaxVelocity = 30; // the fastest the player can accelerate
         this.jumpHeight = 0.55;
         this.emitedPackages = 0;
-        this.body = Bodies.rectangle(x, y, this.width, this.height, options);
+        this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
     }
 

@@ -4,6 +4,7 @@ class Game {
         this.player = new Player();
         this.terrain = new Terrain(this.player); // passes player to check jump
         this.otherPlayers = {} // map with id as key
+        this.otherPlayersBodies = {} // same but containing matterjs objects
 
         // create obstacles based on current map
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
@@ -19,6 +20,19 @@ class Game {
     updatePlayerPositions(data) {
         this.otherPlayers = data;
         delete this.otherPlayers[socket.id]; // dont keep own data
+        Object.keys(this.otherPlayers).map((playerId) => {
+            const playerData = this.otherPlayers[playerId];
+            const { position, velocity } = playerData;
+            if (this.otherPlayersBodies[playerId]) {
+                const body = this.otherPlayersBodies[playerId];
+                Body.setPosition(body, position);
+                Body.setVelocity(body, velocity);
+            } else {
+                const body = Bodies.rectangle(position.x, position.y, this.player.width, this.player.height, this.player.options);
+                this.otherPlayersBodies[playerId] = body;
+                World.add(world, body);
+            }
+        });
     }
 
     drawOtherPlayers() {
