@@ -27,8 +27,8 @@ class Game {
                 const body = this.otherPlayersBodies[playerId];
                 Body.setPosition(body, position);
                 Body.setVelocity(body, velocity);
+                console.log(body);
             } else {
-                console.log('creating body for player', playerId);
                 const body = Bodies.rectangle(position.x, position.y, this.player.width, this.player.height, this.player.options);
                 this.otherPlayersBodies[playerId] = body;
                 World.add(world, body);

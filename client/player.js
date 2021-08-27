@@ -13,6 +13,7 @@ class Player {
         this.height = 100;
         this.width = 50;
         this.jumpHeight = 0.55;
+        this.maxSpeed = 10;
         this.emitedPackages = 0;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
@@ -35,7 +36,16 @@ class Player {
         }
     }
 
+    limitMaxSpeed() {
+        const vel = this.body.velocity;
+
+        vel.x = vel.x >= this.maxSpeed ? this.maxSpeed : vel.x;
+        vel.x = vel.x <= -this.maxSpeed ? -this.maxSpeed : vel.x;
+        Body.setVelocity(this.body, vel);
+    }
+
     update() {
+        this.limitMaxSpeed();
         const speed = this.isSteppingGround ? this.speed : this.airSpeed;
         if (isPressingLeft())
             Body.applyForce(this.body, this.body.position, { x: -speed, y: 0 });
