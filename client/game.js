@@ -1,6 +1,6 @@
 class Game {
     constructor() {
-        this.playerRefreshInterval = 1000 / 10; // five time every 1000 milliseconds
+        this.playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
         this.player = new Player();
         this.terrain = new Terrain(this.player); // passes player to check jump
         this.otherPlayers = {} // map with id as key

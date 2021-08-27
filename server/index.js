@@ -9,7 +9,7 @@ const map = maps.random();
 
 // players with id as key
 const players = {};
-const refreshInterval = 1000 / 10; // five time every 1000 milliseconds
+const refreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
 
 
 const onPlayerInfo = (playerInfo, socket) => {

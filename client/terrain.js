@@ -11,7 +11,8 @@ class Terrain {
                 const { bodyA, bodyB } = pairs[0];
                 if (bodyA.label == "ground" && bodyB.label == "player"
                     || bodyA.label == "player" && bodyB.label == "ground"
-                    || bodyA.label == "player" && bodyB.label == "player") {
+                    // || bodyA.label == "player" && bodyB.label == "player"
+                ) {
                     player.isSteppingGround = true;
                 }
             }
