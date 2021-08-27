@@ -9,6 +9,7 @@ class Game {
         // create obstacles based on current map
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
         socket.on("players", (data) => this.updatePlayerPositions(data));
+        socket.on("deletePlayer", (data) => this.deletePlayer(data));
 
         setInterval(() => this.player.heartbeat(), this.playerRefreshInterval);
     }
@@ -27,13 +28,21 @@ class Game {
                 const body = this.otherPlayersBodies[playerId];
                 Body.setPosition(body, position);
                 Body.setVelocity(body, velocity);
-                console.log(body);
             } else {
                 const body = Bodies.rectangle(position.x, position.y, this.player.width, this.player.height, this.player.options);
                 this.otherPlayersBodies[playerId] = body;
                 World.add(world, body);
             }
         });
+    }
+
+    deletePlayer(data) {
+        const { id } = data;
+
+        delete this.otherPlayers[id];
+
+        const playerBody = this.otherPlayersBodies[id];
+        if (playerBody) Matter.Composite.remove(world, playerBody)
     }
 
     drawOtherPlayers() {

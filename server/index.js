@@ -16,7 +16,6 @@ const onPlayerInfo = (playerInfo, socket) => {
     const id = socket.id;
     const { position, velocity } = playerInfo;
     players[id] = { position, velocity };
-    console.log(players, socket.id);
     socket.emit('players', players);
 }
 
@@ -34,6 +33,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         delete players[socket.id];
         console.log(`Client disconnected: ${address}`);
+        io.sockets.emit('deletePlayer',{ id: socket.id });
     });
 })
 
