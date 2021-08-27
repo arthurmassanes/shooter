@@ -43,11 +43,18 @@ module.exports = {
                 color: "lightblue"
             },
             {
-                position: { x: 700, y: 150 },
+                position: { x: 800, y: 250 },
                 isStatic: true,
                 height: 30,
-                width: 300,
+                width: 200,
                 color: "grey"
+            },
+            {
+                position: { x: 820, y: 50 },
+                isStatic: true,
+                height: 20,
+                width: 300,
+                color: "black"
             },
         ]
     ],

@@ -9,10 +9,9 @@ class Player {
         };
         this.isSteppingGround = false;
         this.speed = 0.1;
-        this.airSpeed = 0.02;
+        this.airSpeed = 0.03;
         this.height = 100;
         this.width = 50;
-        this.xMaxVelocity = 30; // the fastest the player can accelerate
         this.jumpHeight = 0.55;
         this.emitedPackages = 0;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);

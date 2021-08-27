@@ -26,6 +26,7 @@ function setup() {
     world.gravity.y = YGRAVITY;
 
     game = new Game();
+    noStroke();
 }
 
 function draw() {

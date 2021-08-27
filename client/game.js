@@ -1,6 +1,6 @@
 class Game {
     constructor() {
-        this.playerRefreshInterval = 1000 / 5; // five time every 1000 milliseconds
+        this.playerRefreshInterval = 1000 / 10; // five time every 1000 milliseconds
         this.player = new Player();
         this.terrain = new Terrain(this.player); // passes player to check jump
         this.otherPlayers = {} // map with id as key
@@ -28,6 +28,7 @@ class Game {
                 Body.setPosition(body, position);
                 Body.setVelocity(body, velocity);
             } else {
+                console.log('creating body for player', playerId);
                 const body = Bodies.rectangle(position.x, position.y, this.player.width, this.player.height, this.player.options);
                 this.otherPlayersBodies[playerId] = body;
                 World.add(world, body);
@@ -36,12 +37,14 @@ class Game {
     }
 
     drawOtherPlayers() {
-        Object.keys(this.otherPlayers).map((playerId) => {
+        Object.keys(this.otherPlayersBodies).map((playerId) => {
             const player = this.otherPlayers[playerId];
-            const pos = player.position;
-            fill("red");
-            rectMode(CENTER);
-            rect(pos.x, pos.y, this.player.width, this.player.height);
+            if (player) {
+                const pos = player.position;
+                fill("red");
+                rectMode(CENTER);
+                rect(pos.x, pos.y, this.player.width, this.player.height);
+            }
         });
     }
 
