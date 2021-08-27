@@ -50,12 +50,27 @@ module.exports = {
                 color: "grey"
             },
             {
-                position: { x: 820, y: 50 },
+                position: { x: 800, y: 75 },
                 isStatic: true,
                 height: 20,
-                width: 300,
+                width: 20,
                 color: "black"
             },
+            {
+                position: { x: 860, y: 50 },
+                isStatic: true,
+                height: 20,
+                width: 20,
+                color: "black"
+            },
+            {
+                position: { x: 900, y: 50 },
+                isStatic: true,
+                height: 20,
+                width: 20,
+                color: "black"
+            },
+
         ]
     ],
     random: () => module.exports.maps[Math.floor(Math.random() * module.exports.maps.length)],
