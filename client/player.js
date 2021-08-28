@@ -7,6 +7,7 @@ class Player {
             friction: 0.5,
             density: 0.002
         };
+        this.color = this.generateRandomColor();
         this.isSteppingGround = false;
         this.speed = 0.1;
         this.airSpeed = 0.03;
@@ -17,6 +18,13 @@ class Player {
         this.emitedPackages = 0;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
+    }
+
+    generateRandomColor() {
+        const r = random(255); // r is a random number between 0 - 255
+        const g = random(100,200); // g is a random number betwen 100 - 200
+        const b = random(100); // b is a random number between 0 - 100
+        return "#" + hex(r,2) + hex(g,2) + hex(b,2);
     }
 
     isMoving() {
@@ -31,6 +39,7 @@ class Player {
             socket.emit("playerInfo", {
                 position: this.body.position,
                 velocity: this.body.velocity,
+                color: this.color
             });
             this.emitedPackages += 1;
         }
@@ -75,7 +84,7 @@ class Player {
         translate(this.body.position.x, this.body.position.y);
         rotate(this.body.angle);
         rectMode(CENTER);
-        fill("blue");
+        fill(this.color);
         rect(0, 0, this.width, this.height);
         pop();
     }

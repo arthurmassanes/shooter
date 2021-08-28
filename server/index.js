@@ -14,8 +14,8 @@ const refreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
 
 const onPlayerInfo = (playerInfo, socket) => {
     const id = socket.id;
-    const { position, velocity } = playerInfo;
-    players[id] = { position, velocity };
+    const { position, velocity, color } = playerInfo;
+    players[id] = { position, velocity, color };
     socket.emit('players', players);
 }
 

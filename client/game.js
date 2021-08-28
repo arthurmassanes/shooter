@@ -50,7 +50,7 @@ class Game {
             const player = this.otherPlayers[playerId];
             if (player) {
                 const pos = player.position;
-                fill("red");
+                fill(player.color);
                 rectMode(CENTER);
                 rect(pos.x, pos.y, this.player.width, this.player.height);
             }
