@@ -5,15 +5,16 @@ class Player {
             label: 'player',
             frictionAir: 0.05,
             friction: 0.5,
-            density: 0.002
+            density: 0.003
         };
         this.color = this.generateRandomColor();
+        this.jumpCoolDown = 0;
         this.isSteppingGround = false;
-        this.speed = 0.1;
-        this.airSpeed = 0.03;
+        this.speed = 0.2;
+        this.airSpeed = 0.04;
         this.height = 100;
         this.width = 50;
-        this.jumpHeight = 0.55;
+        this.jumpHeight = 1;
         this.maxSpeed = 10;
         this.emitedPackages = 0;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
@@ -55,6 +56,7 @@ class Player {
 
     update() {
         this.limitMaxSpeed();
+        this.jumpCoolDown++;
         const speed = this.isSteppingGround ? this.speed : this.airSpeed;
         if (isPressingLeft())
             Body.applyForce(this.body, this.body.position, { x: -speed, y: 0 });
@@ -62,8 +64,11 @@ class Player {
             Body.applyForce(this.body, this.body.position, { x: speed, y: 0 });
 
         // const isCollidingWithGround = Matter.SAT.collides(this.body, terrain.ground.body).collided;
-        if (isPressingJump() && this.isSteppingGround) {
+        if (isPressingJump() && this.isSteppingGround
+            // limit jump to twice per second
+        && this.jumpCoolDown >= FPS / 2) {
             Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
+            this.jumpCoolDown = 0;
             this.isSteppingGround = false;
         }
         this.stayInScreen();
