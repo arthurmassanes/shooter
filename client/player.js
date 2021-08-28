@@ -72,11 +72,20 @@ class Player {
     // constrain the player to the screen
     stayInScreen() {
         const halfBody = this.width / 2;
+
+        // left and right
         if (this.body.position.x <= 0 - halfBody) {
             Body.setPosition(this.body, { x: gWidth, y: this.body.position.y });
         } else if (this.body.position.x >= gWidth + halfBody) {
             Body.setPosition(this.body, { x: 0, y: this.body.position.y });
         }
+        // bottom of screen -> respawn
+        if (this.body.position.y >= gHeight * 2) this.respawn();
+    }
+
+    respawn() {
+        const pos = { x: 200, y: 100 };
+        Body.setPosition(this.body, pos);
     }
 
     draw() {
