@@ -29,7 +29,8 @@ class Game {
                 Body.setPosition(body, position);
                 Body.setVelocity(body, velocity);
             } else {
-                const body = Bodies.rectangle(position.x, position.y, this.player.width, this.player.height, this.player.options);
+                const options = { ...this.player.options, label: 'player ' + playerId }
+                const body = Bodies.rectangle(position.x, position.y, this.player.width, this.player.height, options);
                 this.otherPlayersBodies[playerId] = body;
                 World.add(world, body);
             }
@@ -65,7 +66,6 @@ class Game {
         textSize(24);
         fill("white");
         text(`connected players: ${Object.keys(this.otherPlayers).length + 1}`, 20, 20);
-        text(`player is touching ground: ${this.player.isSteppingGround}`, 20, 50);
         if (this.terrain.isLoading) {
             text(`Loading obstacles...`, 20, 50);
             world.gravity.y = 0;

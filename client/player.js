@@ -67,9 +67,9 @@ class Player {
         if (isPressingJump() && this.isSteppingGround
             // limit jump to twice per second
         && this.jumpCoolDown >= FPS / 2) {
+            this.isSteppingGround = false;
             Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
             this.jumpCoolDown = 0;
-            this.isSteppingGround = false;
         }
         this.stayInScreen();
     }
