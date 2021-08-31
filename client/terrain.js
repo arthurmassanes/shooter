@@ -73,6 +73,6 @@ class Terrain {
             rect(0, 0, b.width, b.height);
             pop();
         }
-        text(`Map: ${this.mapLabel}`, 20, 50);
+        !this.isLoading && text(`Map: ${this.mapLabel}`, 20, 50);
     }
 }

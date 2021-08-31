@@ -141,8 +141,8 @@ module.exports = {
                     position: { x: 200, y: 150 },
                     isStatic: true,
                     height: 20,
-                    width: 200,
-                    angle: 0.4,
+                    width: 250,
+                    angle: 0.45,
                     color: "red"
                 },
                 {
@@ -188,6 +188,14 @@ module.exports = {
                     width: 150,
                     color: "black"
                 },
+                {
+                    position: { x: 700, y: 400 },
+                    isStatic: true,
+                    height: 10,
+                    width: 200,
+                    color: "red"
+                },
+
             ],
         }
     ],
