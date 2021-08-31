@@ -3,6 +3,7 @@
 class Terrain {
     constructor(player) {
         this.bodies = [];
+        this.mapLabel = ""; // Every map has a label but its more for debug
         this.isLoading = true;
         // setup collisions between ground and player for jump authorization
         Matter.Events.on(engine, 'collisionStart', function(event) {
@@ -32,7 +33,8 @@ class Terrain {
 
     generateObstacles(serverData) {
         this.removeObstacles();
-        for (const obstacle of serverData) {
+        this.mapLabel = serverData.label;
+        for (const obstacle of serverData.obstacles) {
             const {
                 position,
                 isStatic,
@@ -46,29 +48,31 @@ class Terrain {
             const options = {
                 label: 'ground',
                 isStatic,
+                density: 0.5,
             };
             const body = Bodies.rectangle(position.x, position.y, width, height, options);
             // optional parameters
+            if (angle) Body.setAngle(body, angle);
             if (restitution) body.restitution = restitution;
-            if (angle) body.angle = angle;
 
             World.add(world, body);
             this.bodies.push({ body, height, width, color });
         }
         this.isLoading = false;
     }
-
+    
     draw() {
         for (const b of this.bodies) {
             const pos = b.body.position;
             const angle = b.body.angle;
             push();
             translate(pos.x, pos.y);
-            rotate(angle);
             rectMode(CENTER);
+            rotate(angle);
             fill(b.color);
             rect(0, 0, b.width, b.height);
             pop();
         }
+        text(`Map: ${this.mapLabel}`, 20, 50);
     }
 }

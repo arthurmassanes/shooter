@@ -6,6 +6,7 @@ const io = require("socket.io")(httpServer, {
 
 const maps = require("./maps/maps");
 const map = maps.random();
+console.log('serving map: ', map.label)
 
 // players with id as key
 const players = {};
