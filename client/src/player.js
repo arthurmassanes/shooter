@@ -1,5 +1,5 @@
 class Player {
-    constructor(x = 200, y = 100) {
+    constructor(x = 240, y = 240) {
         this.options = {
             inertia: Infinity, // so it dont rotate
             label: 'player',
