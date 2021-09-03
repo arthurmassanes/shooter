@@ -10,7 +10,8 @@ var Engine = Matter.Engine,
   
   const playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
 class Game {
-    constructor() {
+    setup() {
+        console.log('bloc');
         // physics engine
         engine = Engine.create();
         world = engine.world;
@@ -24,11 +25,11 @@ class Game {
         // Socket:
         // create obstacles based on current map
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
+        socket.emit("map"); // request map info
         socket.on("players", (data) => this.updatePlayerPositions(data));
         socket.on("deletePlayer", (data) => this.deletePlayer(data));
         
         setInterval(() => this.player.heartbeat(), playerRefreshInterval);
-
     }
 
     update() {
@@ -77,6 +78,9 @@ class Game {
     }
 
     draw() {
+
+        this.update();
+
         background(51);
         this.player.draw();
         this.terrain.draw();

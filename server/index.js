@@ -23,7 +23,7 @@ const onPlayerInfo = (playerInfo, socket) => {
 io.on("connection", (socket) => {
     const address = socket.request.connection.remoteAddress;
     console.log(`New connection from address ${address}`, socket.id);
-    socket.emit("map", map);
+    socket.on("map", () => socket.emit("map", map));
     
     // update player about other clients
     setInterval(() => socket.emit('players', players), refreshInterval);
