@@ -1,20 +1,38 @@
+// module aliases
+var engine, world;
+var Engine = Matter.Engine,
+  World = Matter.World,
+  Bodies = Matter.Bodies,
+  Body = Matter.Body,
+  Constraint = Matter.Constraint,
+  Mouse = Matter.Mouse,
+  MouseConstraint = Matter.MouseConstraint;
+  
+  const playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
 class Game {
     constructor() {
-        this.playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
+        // physics engine
+        engine = Engine.create();
+        world = engine.world;
+        world.gravity.y = YGRAVITY;
+          
         this.player = new Player();
         this.terrain = new Terrain(this.player); // passes player to check jump
         this.otherPlayers = {} // map with id as key
         this.otherPlayersBodies = {} // same but containing matterjs objects
 
+        // Socket:
         // create obstacles based on current map
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
         socket.on("players", (data) => this.updatePlayerPositions(data));
         socket.on("deletePlayer", (data) => this.deletePlayer(data));
+        
+        setInterval(() => this.player.heartbeat(), playerRefreshInterval);
 
-        setInterval(() => this.player.heartbeat(), this.playerRefreshInterval);
     }
 
     update() {
+        Engine.update(engine);
         this.player.update();
     }
 
@@ -59,10 +77,12 @@ class Game {
     }
 
     draw() {
+        background(51);
         this.player.draw();
         this.terrain.draw();
         this.drawOtherPlayers();
 
+        noStroke();
         textSize(24);
         fill("white");
         text(`connected players: ${Object.keys(this.otherPlayers).length + 1}`, 20, 20);
