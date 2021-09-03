@@ -1,12 +1,25 @@
-function Menu() {
+class Menu {
     setup() {
-        // this.button = createButton('click me');
-        // this.button.position(0, 0);
-        // this.button.mousePressed(this.startGame());
+
+        this.startButton = createButton('Start game');
+        this.startButton.position(gWidth / 2, gHeight / 2);
+        this.startButton.mousePressed(() => this.startGame());
+
+        this.joinButton = createButton('Join Game');
+        this.joinButton.position(gWidth / 2, gHeight / 2 + 100);
+        this.joinButton.mousePressed(() => this.joinGame());
+
     }
 
+    joinGame() {
+        
+    }
 
-    // mgr.showNextScene()
+    startGame() {
+        this.startButton.remove();
+        this.joinButton.remove();
+        mgr.showScene(Game)
+    }
 
     draw() {
         background(42);

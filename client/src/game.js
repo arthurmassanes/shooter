@@ -11,7 +11,6 @@ var Engine = Matter.Engine,
   const playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
 class Game {
     setup() {
-        console.log('bloc');
         // physics engine
         engine = Engine.create();
         world = engine.world;

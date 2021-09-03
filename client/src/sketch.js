@@ -3,7 +3,6 @@ const gHeight = 720;
 const FPS = 30;
 const YGRAVITY = 3;
 
-var game;
 var mgr;
 
 function setup() {
@@ -12,13 +11,10 @@ function setup() {
     createCanvas(gWidth, gHeight);
 
     mgr = new SceneManager();
-    // mgr.addScene(Menu);
-    mgr.addScene(Game);
-    mgr.showScene(Game);
+    mgr.showScene(Menu);
 }
 
 function mousePressed() {
-    console.log("mousePressed");
 }
 
 function draw() {
