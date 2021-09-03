@@ -1,2 +1,2 @@
 # shooter
-https://arthurmassanes.github.io/shooter/client
+[Online demo](https://arthurmassanes.github.io/shooter/client)
