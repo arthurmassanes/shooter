@@ -1,19 +1,19 @@
 class Player {
-    constructor(x = 240, y = 240) {
+    constructor(x = 200, y = 100) {
         this.options = {
             inertia: Infinity, // so it dont rotate
             label: 'player',
             frictionAir: 0.05,
             friction: 0.5,
-            density: 0.003
+            density: 0.002
         };
         this.color = this.generateRandomColor();
         this.jumpCoolDown = 0;
         this.isSteppingGround = false;
         this.speed = 0.2;
         this.airSpeed = 0.04;
-        this.height = 100;
-        this.width = 50;
+        this.height = 96;
+        this.width = 96;
         this.jumpHeight = 1;
         this.maxSpeed = 10;
         this.emitedPackages = 0;
