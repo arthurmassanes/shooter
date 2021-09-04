@@ -12,13 +12,18 @@ class Menu {
     }
 
     joinGame() {
-        
+        this.deleteMenu();
+        mgr.showScene(JoinGame);
     }
 
     startGame() {
+        this.deleteMenu();
+        mgr.showScene(CreateGame)
+    }
+
+    deleteMenu() {
         this.startButton.remove();
         this.joinButton.remove();
-        mgr.showScene(Game)
     }
 
     draw() {

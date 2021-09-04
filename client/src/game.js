@@ -21,8 +21,11 @@ class Game {
         this.otherPlayers = {} // map with id as key
         this.otherPlayersBodies = {} // same but containing matterjs objects
 
-        // Socket:
-        // create obstacles based on current map
+        this.setupSocket();
+    }
+
+    setupSocket() {
+        console.log(socket);
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
         socket.emit("map"); // request map info
         socket.on("players", (data) => this.updatePlayerPositions(data));

@@ -32,6 +32,7 @@ class Terrain {
     }
 
     generateObstacles(serverData) {
+        console.log('received map from server: ', serverData);
         this.removeObstacles();
         this.mapLabel = serverData.label;
         for (const obstacle of serverData.obstacles) {
