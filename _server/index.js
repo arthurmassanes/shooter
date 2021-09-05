@@ -52,9 +52,11 @@ io.on("connection", (socket) => {
     });
 
     socket.on("joinRoom", (id) => {
-        socket.join(id);
-        roomId = id;
-        console.log(`socket ${socket.id} joined room ${roomId}`);
+        if (rooms[id]) {
+            roomId = id;
+            socket.join(id);
+            console.log(`socket ${socket.id} joined room ${roomId}`);
+        }
     });
 
     socket.on("listRooms", () => {
@@ -63,7 +65,10 @@ io.on("connection", (socket) => {
         socket.emit("listRooms", roomList);
     });
 
-    socket.on("map", () => socket.emit("map", rooms[roomId].map));
+    socket.on("map", () => {
+        const room = rooms[roomId];
+        if (room) socket.emit("map", room.map);
+    });
 
     // update player about other clients
     setInterval(() => {
@@ -74,9 +79,10 @@ io.on("connection", (socket) => {
 
     socket.on("playerInfo", (d) => onPlayerInfo(d, socket, roomId));
     socket.on("disconnect", () => {
-        delete players[socket.id];
+        const room = rooms[roomId];
+        delete room.players[socket.id];
         console.log(`Client disconnected: ${address}`);
-        io.sockets.emit('deletePlayer',{ id: socket.id });
+        io.sockets.emit('deletePlayer', { id: socket.id });
     });
 })
 
