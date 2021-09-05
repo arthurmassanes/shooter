@@ -2,6 +2,7 @@
 // Terrain generator
 class Terrain {
     constructor(player) {
+        this.backgroundImage = undefined;
         this.bodies = [];
         this.mapLabel = ""; // Every map has a label but its more for debug
         this.isLoading = true;
@@ -22,6 +23,7 @@ class Terrain {
 
     // deletes game objects (useful to rebuild the map)
     removeObstacles() {
+        this.backgroundImage = undefined;
         const worldBodies = [...world.bodies]
         worldBodies.map((body) => {
             if (body.label == "ground") {
@@ -32,8 +34,8 @@ class Terrain {
     }
 
     generateObstacles(serverData) {
-        console.log('received map from server: ', serverData);
         this.removeObstacles();
+        this.backgroundImage = loadImage('assets/bg1.png');
         this.mapLabel = serverData.label;
         for (const obstacle of serverData.obstacles) {
             const {
@@ -63,6 +65,9 @@ class Terrain {
     }
     
     draw() {
+        // draw bg
+        if (this.backgroundImage) image(this.backgroundImage, 0, 0, this.backgroundImage.width * 4, this.backgroundImage.height * 4);
+        // then draw platforms
         for (const b of this.bodies) {
             const pos = b.body.position;
             const angle = b.body.angle;

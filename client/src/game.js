@@ -82,9 +82,9 @@ class Game {
 
         this.update();
 
-        background(51);
-        this.player.draw();
+        background(41);
         this.terrain.draw();
+        this.player.draw();
         this.drawOtherPlayers();
 
         noStroke();
