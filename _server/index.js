@@ -80,7 +80,7 @@ io.on("connection", (socket) => {
     socket.on("playerInfo", (d) => onPlayerInfo(d, socket, roomId));
     socket.on("disconnect", () => {
         const room = rooms[roomId];
-        delete room.players[socket.id];
+        if (room) delete room.players[socket.id];
         console.log(`Client disconnected: ${address}`);
         io.sockets.emit('deletePlayer', { id: socket.id });
     });
