@@ -25,7 +25,6 @@ class Game {
     }
 
     setupSocket() {
-        console.log(socket);
         socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
         socket.emit("map"); // request map info
         socket.on("players", (data) => this.updatePlayerPositions(data));
