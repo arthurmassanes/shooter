@@ -10,6 +10,7 @@ class JoinGame {
         socket.on("listRooms", (data) => {
             this.rooms = data.filter(r => r.startsWith('room'));
             this.rooms.map(r => this.sel.option(r))
+            if (!this.rooms.length) this.join.remove();
         });
         socket.emit("listRooms");
     }
