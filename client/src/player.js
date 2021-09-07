@@ -1,19 +1,22 @@
+const PLAYER_HEIGHT = 96;
+const matterPlayerOptions = {
+    inertia: Infinity, // so it dont rotate
+    label: 'player',
+    frictionAir: 0.05,
+    friction: 0.5,
+    density: 0.002
+};
+
 class Player {
     constructor(x = 200, y = 100) {
-        this.options = {
-            inertia: Infinity, // so it dont rotate
-            label: 'player',
-            frictionAir: 0.05,
-            friction: 0.5,
-            density: 0.002
-        };
+        this.options = matterPlayerOptions;
         this.color = this.generateRandomColor();
         this.jumpCoolDown = 0;
         this.isSteppingGround = false;
         this.speed = 0.2;
         this.airSpeed = 0.04;
-        this.height = 96;
-        this.width = 96;
+        this.height = PLAYER_HEIGHT;
+        this.width = PLAYER_HEIGHT;
         this.jumpHeight = 1;
         this.maxSpeed = 10;
         this.emitedPackages = 0;

@@ -8,7 +8,7 @@ var Engine = Matter.Engine,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint;
   
-  const playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
+const playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
 class Game {
     setup() {
         // physics engine
@@ -41,18 +41,16 @@ class Game {
         const otherPlayersMap = data;
         delete otherPlayersMap[socket.id]; // dont keep own data
         Object.keys(otherPlayersMap).map((playerId) => {
-            // dot find here
-            // const playerData = this.otherPlayers[playerId];
-            const { position, velocity } = playerData;
-            if (this.otherPlayersBodies[playerId]) {
-                const body = this.otherPlayersBodies[playerId];
-                Body.setPosition(body, position);
-                Body.setVelocity(body, velocity);
+            // local object
+            const otherPlayer = this.otherPlayers.find((p) => p.id === playerId);
+            // server data
+            const playerData = otherPlayersMap[playerId];
+            const { position, velocity, color } = playerData;
+            if (otherPlayer) {
+                otherPlayer.update(position, velocity);
             } else {
-                const options = { ...this.player.options, label: 'player ' + playerId }
-                const body = Bodies.rectangle(position.x, position.y, this.player.width, this.player.height, options);
-                this.otherPlayersBodies[playerId] = body;
-                World.add(world, body);
+                const newPlayer = new OtherPlayer(playerId, position, velocity, color);
+                this.otherPlayers.push(newPlayer);
             }
         });
     }
@@ -60,22 +58,15 @@ class Game {
     deletePlayer(data) {
         const { id } = data;
 
-        delete this.otherPlayers[id];
+        const otherPlayer = this.otherPlayers.find((p) => p.id === id)
 
-        const playerBody = this.otherPlayersBodies[id];
-        if (playerBody) Matter.Composite.remove(world, playerBody)
+        if (otherPlayer) otherPlayer.delete();
+        this.otherPlayers = this.otherPlayers.filter((p) => p.id !== id)
+
     }
 
     drawOtherPlayers() {
-        Object.keys(this.otherPlayersBodies).map((playerId) => {
-            const player = this.otherPlayers[playerId];
-            if (player) {
-                const pos = player.position;
-                fill(player.color);
-                rectMode(CENTER);
-                rect(pos.x, pos.y, this.player.width, this.player.height);
-            }
-        });
+        this.otherPlayers.map((p) => p.draw());
     }
 
     draw() {
