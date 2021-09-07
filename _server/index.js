@@ -6,8 +6,6 @@ const io = require("socket.io")(httpServer, {
 
 const maps = require("./maps/maps");
 
-// players with id as key
-const players = {};
 const refreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
 
 // object with room id as keys
