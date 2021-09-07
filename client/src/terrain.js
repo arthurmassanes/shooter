@@ -66,7 +66,7 @@ class Terrain {
     
     draw() {
         // draw bg
-        if (this.backgroundImage) image(this.backgroundImage, 0, 0, this.backgroundImage.width * 4, this.backgroundImage.height * 4);
+        if (this.backgroundImage) image(this.backgroundImage, 0, 0);
         // then draw platforms
         for (const b of this.bodies) {
             const pos = b.body.position;
