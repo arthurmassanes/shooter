@@ -41,11 +41,11 @@ class Game {
         const otherPlayersMap = data;
         delete otherPlayersMap[socket.id]; // dont keep own data
         Object.keys(otherPlayersMap).map((playerId) => {
-            // local object
-            const otherPlayer = this.otherPlayers.find((p) => p.id === playerId);
             // server data
             const playerData = otherPlayersMap[playerId];
             const { position, velocity, color } = playerData;
+            // local object
+            const otherPlayer = this.otherPlayers.find((p) => p.id === playerId);
             if (otherPlayer) {
                 otherPlayer.update(position, velocity);
             } else {
