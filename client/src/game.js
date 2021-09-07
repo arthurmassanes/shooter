@@ -18,8 +18,7 @@ class Game {
           
         this.player = new Player();
         this.terrain = new Terrain(this.player); // passes player to check jump
-        this.otherPlayers = {} // map with id as key
-        this.otherPlayersBodies = {} // same but containing matterjs objects
+        this.otherPlayers = [] // array of OtherPlayer s
 
         this.setupSocket();
     }
@@ -39,10 +38,11 @@ class Game {
     }
 
     updatePlayerPositions(data) {
-        this.otherPlayers = data;
-        delete this.otherPlayers[socket.id]; // dont keep own data
-        Object.keys(this.otherPlayers).map((playerId) => {
-            const playerData = this.otherPlayers[playerId];
+        const otherPlayersMap = data;
+        delete otherPlayersMap[socket.id]; // dont keep own data
+        Object.keys(otherPlayersMap).map((playerId) => {
+            // dot find here
+            // const playerData = this.otherPlayers[playerId];
             const { position, velocity } = playerData;
             if (this.otherPlayersBodies[playerId]) {
                 const body = this.otherPlayersBodies[playerId];

@@ -3,8 +3,8 @@ const gHeight = 720;
 const FPS = 30;
 const YGRAVITY = 3;
 
-const url = "https://a-shooter.herokuapp.com/"
-// const url = "http://localhost:3000";
+// const url = "https://a-shooter.herokuapp.com/"
+const url = "http://localhost:3000";
 var socket = io(url);
 
 var mgr;
