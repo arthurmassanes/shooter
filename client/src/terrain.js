@@ -35,8 +35,11 @@ class Terrain {
 
     generateObstacles(serverData) {
         this.removeObstacles();
-        this.backgroundImage = loadImage('assets/bg1.png');
         this.mapLabel = serverData.label;
+        const filepath = serverData.filepath; // the background
+        if (filepath) {
+            this.backgroundImage = loadImage(filepath);
+        }
         for (const obstacle of serverData.obstacles) {
             const {
                 position,
@@ -45,9 +48,9 @@ class Terrain {
                 restitution,
                 width,
                 angle,
-                color 
             } = obstacle;
 
+            const color = obstacle.color || "red";
             const options = {
                 label: 'ground',
                 isStatic,
