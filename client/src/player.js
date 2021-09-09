@@ -82,10 +82,10 @@ class Player {
         const halfBody = this.width / 2;
 
         // left and right
-        if (this.body.position.x <= 0 - halfBody) {
-            Body.setPosition(this.body, { x: gWidth, y: this.body.position.y });
-        } else if (this.body.position.x >= gWidth + halfBody) {
-            Body.setPosition(this.body, { x: 0, y: this.body.position.y });
+        if (this.body.position.x <= 0 + halfBody) {
+            Body.setPosition(this.body, { x: 0 + halfBody, y: this.body.position.y });
+        } else if (this.body.position.x >= gWidth - halfBody) {
+            Body.setPosition(this.body, { x: gWidth - halfBody, y: this.body.position.y });
         }
         // bottom of screen -> respawn
         if (this.body.position.y >= gHeight * 2) this.respawn();
@@ -98,6 +98,7 @@ class Player {
 
     draw() {
         push();
+        noStroke();
         translate(this.body.position.x, this.body.position.y);
         rotate(this.body.angle);
         rectMode(CENTER);

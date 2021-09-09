@@ -7,12 +7,19 @@ module.exports = {
         // MAP ONE
         {
             label: 'Rocky',
+            filepath: 'assets/maps/rocky/bg.png', // the background
             obstacles: [
                 {
-                    position: { x: 200, y: 150 },
-                    width: 10, height: 10,
+                    filepath: 'assets/maps/rocky/obstacle1.png',
+                    position: { x: 1020, y: 670 },
                     isStatic: true,
-                    angle: 0.45,
+                    // angle: 0.1,
+                },
+                {
+                    filepath: 'assets/maps/rocky/obstacle2.png',
+                    position: { x: 295, y: 670 },
+                    isStatic: true,
+                    // angle: 0.1,
                 },
             ]
         },

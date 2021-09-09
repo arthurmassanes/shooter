@@ -3,7 +3,7 @@
 class Terrain {
     constructor(player) {
         this.backgroundImage = undefined;
-        this.bodies = [];
+        this.obstacles = [];
         this.mapLabel = ""; // Every map has a label but its more for debug
         this.isLoading = true;
         // setup collisions between ground and player for jump authorization
@@ -24,13 +24,7 @@ class Terrain {
     // deletes game objects (useful to rebuild the map)
     removeObstacles() {
         this.backgroundImage = undefined;
-        const worldBodies = [...world.bodies]
-        worldBodies.map((body) => {
-            if (body.label == "ground") {
-                this.bodies = this.bodies.filter(b => b.body.id != body.id);
-                World.remove(world, body);
-            }
-        });
+        this.obstacles.map(o => o.remove());
     }
 
     generateObstacles(serverData) {
@@ -42,27 +36,14 @@ class Terrain {
         }
         for (const obstacle of serverData.obstacles) {
             const {
+                filepath,
                 position,
                 isStatic,
-                height,
                 restitution,
-                width,
                 angle,
             } = obstacle;
-
-            const color = obstacle.color || "red";
-            const options = {
-                label: 'ground',
-                isStatic,
-                density: 0.5,
-            };
-            const body = Bodies.rectangle(position.x, position.y, width, height, options);
-            // optional parameters
-            if (angle) Body.setAngle(body, angle);
-            if (restitution) body.restitution = restitution;
-
-            World.add(world, body);
-            this.bodies.push({ body, height, width, color });
+            
+            this.obstacles.push(new Obstacle(filepath, position, isStatic, restitution, angle));
         }
         this.isLoading = false;
     }
@@ -71,17 +52,6 @@ class Terrain {
         // draw bg
         if (this.backgroundImage) image(this.backgroundImage, 0, 0);
         // then draw platforms
-        for (const b of this.bodies) {
-            const pos = b.body.position;
-            const angle = b.body.angle;
-            push();
-            translate(pos.x, pos.y);
-            rectMode(CENTER);
-            rotate(angle);
-            fill(b.color);
-            rect(0, 0, b.width, b.height);
-            pop();
-        }
-        !this.isLoading && text(`Map: ${this.mapLabel}`, 20, 50);
+        this.obstacles.map(o => o.draw());
     }
 }

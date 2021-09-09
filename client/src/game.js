@@ -81,10 +81,15 @@ class Game {
         noStroke();
         textSize(24);
         fill("white");
-        text(`connected players: ${Object.keys(this.otherPlayers).length + 1}`, 20, 20);
         if (this.terrain.isLoading) {
             text(`Loading obstacles...`, 20, 50);
             world.gravity.y = 0;
-        } else world.gravity.y = YGRAVITY;
+        } else {
+            world.gravity.y = YGRAVITY;
+            stroke(50);
+            strokeWeight(3);
+            text(`connected players: ${Object.keys(this.otherPlayers).length + 1}`, 20, 20);
+            text(`Map: ${this.terrain.mapLabel}`, 20, 50);
+        }
     }
 }
