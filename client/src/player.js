@@ -10,6 +10,7 @@ const matterPlayerOptions = {
 class Player {
     constructor(x = 200, y = 100) {
         this.health = 100;
+        this.healthBar = new HealthBar();
         this.options = matterPlayerOptions;
         this.color = this.generateRandomColor();
         this.jumpCoolDown = 0;
@@ -95,6 +96,7 @@ class Player {
 
     respawn() {
         const pos = { x: 200, y: 100 };
+        this.health -= 10;
         Body.setPosition(this.body, pos);
     }
 
@@ -107,6 +109,6 @@ class Player {
         fill(this.color);
         rect(0, 0, this.width, this.height);
         pop();
-        text(this.health, this.body.position.x, this.body.position.y);
+        this.healthBar.draw(this.body.position, this.health);
     }
 }

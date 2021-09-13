@@ -2,6 +2,7 @@ class OtherPlayer {
     constructor(id, position, velocity, color, health = 100, width = PLAYER_HEIGHT, height = PLAYER_HEIGHT) {
         this.id = id;
         this.health = health;
+        this.healthBar = new HealthBar();
         this.width = width;
         this.color = color;
         this.height = height;
@@ -28,7 +29,7 @@ class OtherPlayer {
         fill(this.color);
         rectMode(CENTER);
         rect(pos.x, pos.y, this.width, this.height);
-        text(this.health, pos.x, pos.y);
+        this.healthBar.draw(pos, this.health);
     }
 
     delete() {
