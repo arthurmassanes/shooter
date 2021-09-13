@@ -5,15 +5,17 @@ class HealthBar {
 
     draw(position, health) {
         var { x, y } = position;
-        y -= 65; 
+        y -= 65; // above head
         push();
         fill("red");
         noStroke();
         rectMode(CENTER);
         rect(x, y, 100, this.height);
-        // rectMode(CORNER);
-        fill("green");
-        rect(x - 100 + health, y, health, this.height);
+        if (health > 0) {
+            rectMode(CORNER);
+            fill("green");
+            rect(x - 50, y - this.height / 2, health, this.height);
+        }
         pop();
     }
 }
