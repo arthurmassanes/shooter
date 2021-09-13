@@ -9,6 +9,7 @@ const matterPlayerOptions = {
 
 class Player {
     constructor(x = 200, y = 100) {
+        this.health = 100;
         this.options = matterPlayerOptions;
         this.color = this.generateRandomColor();
         this.jumpCoolDown = 0;
@@ -43,7 +44,8 @@ class Player {
             socket.emit("playerInfo", {
                 position: this.body.position,
                 velocity: this.body.velocity,
-                color: this.color
+                color: this.color,
+                health: this.health
             });
             this.emitedPackages += 1;
         }
@@ -105,5 +107,6 @@ class Player {
         fill(this.color);
         rect(0, 0, this.width, this.height);
         pop();
+        text(this.health, this.body.position.x, this.body.position.y);
     }
 }

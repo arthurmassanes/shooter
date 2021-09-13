@@ -23,10 +23,15 @@ function getActiveRooms() {
 
 const onPlayerInfo = (playerInfo, socket, roomId) => {
     const id = socket.id;
-    const { position, velocity, color } = playerInfo;
+    const {
+        position,
+        velocity,
+        color,
+        health
+    } = playerInfo;
     if (rooms[roomId]) {
         console.log('receiving player pos', id, roomId);
-        rooms[roomId].players[id] = { position, velocity, color };
+        rooms[roomId].players[id] = { position, velocity, color, health };
     }
     // socket.emit('players', players);
 }

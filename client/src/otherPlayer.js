@@ -1,6 +1,7 @@
 class OtherPlayer {
-    constructor(id, position, velocity, color, width = PLAYER_HEIGHT, height = PLAYER_HEIGHT) {
+    constructor(id, position, velocity, color, health = 100, width = PLAYER_HEIGHT, height = PLAYER_HEIGHT) {
         this.id = id;
+        this.health = health;
         this.width = width;
         this.color = color;
         this.height = height;
@@ -11,8 +12,9 @@ class OtherPlayer {
         World.add(world, this.body);
     }
 
-    update(position, velocity) {
+    update(position, velocity, health) {
         this.position = position;
+        this.health = health;
         // console.log('applying pos and vel', position, velocity);
         // console.log(this.body.position, this.body.velocity);
         Body.setVelocity(this.body, velocity);
@@ -26,6 +28,7 @@ class OtherPlayer {
         fill(this.color);
         rectMode(CENTER);
         rect(pos.x, pos.y, this.width, this.height);
+        text(this.health, pos.x, pos.y);
     }
 
     delete() {
