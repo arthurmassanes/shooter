@@ -18,6 +18,8 @@ class JoinGame {
     joinGame(gameId) {
         this.join.remove();
         this.sel.remove();
+        // add game id in url
+        window.history.pushState({}, '', `?room=${gameId}`);
         socket.emit("joinRoom", gameId);
         mgr.showScene(Game)
     }

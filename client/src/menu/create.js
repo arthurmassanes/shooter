@@ -9,6 +9,7 @@ class CreateGame {
     startGame() {
         this.start.remove();
         socket.emit("createRoom", 'room');
+        window.history.pushState({}, '', `?room=room${socket.id}`);
         mgr.showScene(Game)
     }
 
