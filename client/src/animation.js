@@ -6,7 +6,7 @@ const spritesFolders = {
 class Animation {
     constructor(spriteFolder = spritesFolders.COWBOY) {
         this.json = loadJSON(`${spriteFolder}/data.json`);
-        this.speed = 1;
+        this.speed = 0.4;
         this.index = 0;
         this.frames = [];
         this.loaded = false;
@@ -25,13 +25,19 @@ class Animation {
         this.loaded = true;
     }
 
-    draw(pos, angle) {
+    draw(pos, angle, vel) {
+        push();
         imageMode(CENTER);
+        translate(pos.x, pos.y);
+        rotate(angle);
+        if (vel.x < 0) {
+            scale(-1, 1);
+        }
 
-        // translate(pos.x, pos.y);
-        // rotate(angle);
-        // const animationIndex = this.index % this.frames.length;
-        // if (this.loaded) image(this.frames[animationIndex], 0, 0);
-        // this.index += this.speed;
+        const animationIndex = round(this.index) % this.frames.length;
+        if (this.loaded) image(this.frames[animationIndex], 0, 0);
+
+        if (vel.x !== 0) this.index += vel.x;
+        pop();
     }
 }

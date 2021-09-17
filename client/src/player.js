@@ -103,14 +103,7 @@ class Player {
     }
 
     draw() {
-        push();
-        noStroke();
-        translate(this.body.position.x, this.body.position.y);
-        rotate(this.body.angle);
-        rectMode(CENTER);
-        fill(this.color);
-        this.animation.draw();
-        pop();
+        this.animation.draw(this.body.position, this.body.angle, this.body.velocity);
         this.healthBar.draw(this.body.position, this.health);
     }
 }
