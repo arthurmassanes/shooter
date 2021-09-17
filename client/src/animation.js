@@ -30,11 +30,12 @@ class Animation {
         imageMode(CENTER);
         translate(pos.x, pos.y);
         rotate(angle);
+        // flip depending on speed
         if (vel.x < 0) {
             scale(-1, 1);
         }
 
-        const animationIndex = round(this.index) % this.frames.length;
+        const animationIndex = Math.abs(round(this.index)) % this.frames.length;
         if (this.loaded) image(this.frames[animationIndex], 0, 0);
 
         if (vel.x !== 0) this.index += vel.x;
