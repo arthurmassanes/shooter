@@ -9,6 +9,7 @@ const matterPlayerOptions = {
 
 class Player {
     constructor(x = 200, y = 100) {
+        this.animation = new Animation();
         this.health = 100;
         this.healthBar = new HealthBar();
         this.options = matterPlayerOptions;
@@ -33,6 +34,7 @@ class Player {
         return "#" + hex(r,2) + hex(g,2) + hex(b,2);
     }
 
+    // not in current use
     isMoving() {
         const vel = this.body.velocity;
         return (vel.x !== 0 || vel.y !== 0)
@@ -107,7 +109,7 @@ class Player {
         rotate(this.body.angle);
         rectMode(CENTER);
         fill(this.color);
-        rect(0, 0, this.width, this.height);
+        this.animation.draw();
         pop();
         this.healthBar.draw(this.body.position, this.health);
     }

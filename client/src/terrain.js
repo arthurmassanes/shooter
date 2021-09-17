@@ -49,9 +49,11 @@ class Terrain {
     }
     
     draw() {
+        push();
         // draw bg
         if (this.backgroundImage) image(this.backgroundImage, 0, 0);
         // then draw platforms
         this.obstacles.map(o => o.draw());
+        pop();
     }
 }
