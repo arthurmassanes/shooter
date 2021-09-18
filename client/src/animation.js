@@ -10,6 +10,7 @@ class Animation {
         this.index = 0;
         this.frames = [];
         this.loaded = false;
+        this.isFacingLeft = false;
 
         // get the frames from spritesheet using json data
         loadImage(`${spriteFolder}/sprite.png`, img => this.generateSpriteSheet(img, this.json));
@@ -31,14 +32,14 @@ class Animation {
         translate(pos.x, pos.y);
         rotate(angle);
         // flip depending on speed
-        if (vel.x < 0) {
+        if (this.isFacingLeft) {
             scale(-1, 1);
         }
 
         const animationIndex = Math.abs(round(this.index)) % this.frames.length;
         if (this.loaded) image(this.frames[animationIndex], 0, 0);
 
-        if (vel.x !== 0) this.index += vel.x;
+        this.index += vel.x;
         pop();
     }
 }

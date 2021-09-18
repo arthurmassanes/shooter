@@ -66,10 +66,14 @@ class Player {
         this.limitMaxSpeed();
         this.jumpCoolDown++;
         const speed = this.isSteppingGround ? this.speed : this.airSpeed;
-        if (isPressingLeft())
+        if (isPressingLeft()) {
             Body.applyForce(this.body, this.body.position, { x: -speed, y: 0 });
-        if (isPressingRight())
+            this.animation.isFacingLeft = true;
+        }
+        if (isPressingRight()) {
+            this.animation.isFacingLeft = false;
             Body.applyForce(this.body, this.body.position, { x: speed, y: 0 });
+        }
 
         // const isCollidingWithGround = Matter.SAT.collides(this.body, terrain.ground.body).collided;
         if (isPressingJump() && this.isSteppingGround
