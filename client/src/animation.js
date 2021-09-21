@@ -2,17 +2,18 @@ const spritesFolders = {
     COWBOY: "assets/animations/cowboy/"
 }
 
-
 class Animation {
-    constructor(spriteFolder = spritesFolders.COWBOY) {
+    constructor(spriteFolder = spritesFolders.COWBOY, state = ANIMATION_STATE.WALK) {
         this.json = undefined;
         this.speed = 0.4;
         this.index = 0;
+        this.state = state;
         this.frames = [];
         this.loaded = false;
         this.isFacingLeft = false;
 
         this.loadSprite(spriteFolder);
+        console.log(ANIMATION_STATE, this.state);
     }
     
     loadSprite(spriteFolder) {
