@@ -5,17 +5,24 @@ const spritesFolders = {
 
 class Animation {
     constructor(spriteFolder = spritesFolders.COWBOY) {
-        this.json = loadJSON(`${spriteFolder}/data.json`);
+        this.json = undefined;
         this.speed = 0.4;
         this.index = 0;
         this.frames = [];
         this.loaded = false;
         this.isFacingLeft = false;
 
-        // get the frames from spritesheet using json data
-        loadImage(`${spriteFolder}/sprite.png`, img => this.generateSpriteSheet(img, this.json));
+        this.loadSprite(spriteFolder);
     }
     
+    loadSprite(spriteFolder) {
+        // get the frames from spritesheet using json data
+        this.json = loadJSON(`${spriteFolder}/data.json`);
+        if (this.json) {
+            loadImage(`${spriteFolder}/sprite.png`, img => this.generateSpriteSheet(img, this.json));
+        }
+    }
+
     generateSpriteSheet(img, json) {
         this.sprite = img;
         json.frames.map(f => {
