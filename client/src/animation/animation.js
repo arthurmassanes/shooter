@@ -13,7 +13,7 @@ class Animation {
         this.isFacingLeft = false;
 
         this.loadSprite(spriteFolder);
-        console.log(ANIMATION_STATE, this.state);
+//        console.log(ANIMATION_STATE, this.state);
     }
     
     loadSprite(spriteFolder) {
@@ -26,6 +26,7 @@ class Animation {
 
     generateSpriteSheet(img, json) {
         this.sprite = img;
+        console.log('loading', json);
         json.frames.map(f => {
             const { x, y, w, h } = f.frame;
             const frame = img.get(x, y, w, h);
