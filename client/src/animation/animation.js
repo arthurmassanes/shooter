@@ -35,20 +35,26 @@ class Animation {
         this.loaded = true;
     }
 
+    getCurrentFrame() {
+        const animationIndex = Math.abs(round(this.index)) % this.frames.length;
+
+        return this.frames[animationIndex];
+    }
+    
     draw(pos, angle, vel) {
         push();
         imageMode(CENTER);
         translate(pos.x, pos.y);
         rotate(angle);
         // flip depending on speed
-        if (this.isFacingLeft) {
-            scale(-1, 1);
+        
+        if (this.loaded) {
+            const frame = this.getCurrentFrame();
+            if (this.isFacingLeft) scale(-1, 1);
+            image(frame, 0, 0);
         }
-
-        const animationIndex = Math.abs(round(this.index)) % this.frames.length;
-        if (this.loaded) image(this.frames[animationIndex], 0, 0);
-
-        this.index += vel.x;
+        
         pop();
+        this.index += vel.x;
     }
 }
