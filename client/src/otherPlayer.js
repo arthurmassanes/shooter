@@ -1,11 +1,10 @@
 class OtherPlayer {
-    constructor(id, position, velocity, color, health = 100, width = PLAYER_HEIGHT, height = PLAYER_HEIGHT) {
+    constructor(id, position, velocity, health = 100) {
         this.id = id;
         this.health = health;
         this.healthBar = new HealthBar();
-        this.width = width;
-        this.color = color;
-        this.height = height;
+        this.width = PLAYER_HEIGHT;
+        this.height = PLAYER_HEIGHT;
         this.position = position;
         const options = { ...matterPlayerOptions, label: 'player ' + id }
         this.body = Bodies.rectangle(position.x, position.y, this.width, this.height, options);
@@ -26,7 +25,6 @@ class OtherPlayer {
         // for now drawing only the received pos
         // (not the matter-computed estimation)
         const pos = this.position;
-        fill(this.color);
         rectMode(CENTER);
         rect(pos.x, pos.y, this.width, this.height);
         this.healthBar.draw(pos, this.health);

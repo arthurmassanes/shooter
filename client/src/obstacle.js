@@ -24,7 +24,7 @@ class Obstacle {
     }
     
     remove() {
-        World.remove(world, this.body);
+        if (this.body) World.remove(world, this.body);
     }
 
     draw() {
@@ -35,7 +35,7 @@ class Obstacle {
         imageMode(CENTER);
         translate(pos.x, pos.y);
         rotate(angle);
-        image(this.image, 0, 0)
+        if (this.image) image(this.image, 0, 0)
         pop();
     }
 }

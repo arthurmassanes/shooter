@@ -6,7 +6,9 @@ class Animation {
     constructor(spriteFolder = spritesFolders.COWBOY, state = ANIMATION_STATE.WALK) {
         this.frames = [];
         this.index = 0;
-
+        // defines which character sprite to use
+        this.spriteFolder = spriteFolder;
+        
         this.loaded = false;
         this.json = undefined;
         this.speed = 0.4;
@@ -14,7 +16,6 @@ class Animation {
         this.isFacingLeft = false;
 
         this.loadSprite(spriteFolder);
-//        console.log(ANIMATION_STATE, this.state);
     }
     
     async loadSprite(spriteFolder) {

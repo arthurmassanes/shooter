@@ -25,6 +25,7 @@ class Terrain {
     removeObstacles() {
         this.backgroundImage = undefined;
         this.obstacles.map(o => o.remove());
+        this.obstacles = [];
     }
 
     generateObstacles(serverData) {

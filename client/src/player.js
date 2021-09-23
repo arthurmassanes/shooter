@@ -13,7 +13,6 @@ class Player {
         this.health = 100;
         this.healthBar = new HealthBar();
         this.options = matterPlayerOptions;
-        this.color = this.generateRandomColor();
         this.jumpCoolDown = 0;
         this.isSteppingGround = false;
         this.speed = 0.2;
@@ -47,7 +46,6 @@ class Player {
             socket.emit("playerInfo", {
                 position: this.body.position,
                 velocity: this.body.velocity,
-                color: this.color,
                 health: this.health
             });
             this.emitedPackages += 1;
