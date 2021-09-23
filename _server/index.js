@@ -21,17 +21,25 @@ function getActiveRooms() {
     return [ ...io.sockets.adapter.rooms.keys() ]
 }
 
+const createRoom = (socket, id) => {
+    socket.join(id);
+    rooms[id] = {
+        map: maps.random(),
+        players: {}
+    }
+    console.log(`socket ${socket.id} created ${id} on map ${rooms[id].map.label}`);
+    return id;
+}
+
 const onPlayerInfo = (playerInfo, socket, roomId) => {
     const id = socket.id;
     const {
         position,
         velocity,
-        color,
         health
     } = playerInfo;
     if (rooms[roomId]) {
-        console.log('receiving player pos', id, roomId);
-        rooms[roomId].players[id] = { position, velocity, color, health };
+        rooms[roomId].players[id] = { position, velocity, health };
     }
     // socket.emit('players', players);
 }
@@ -41,24 +49,22 @@ io.on("connection", (socket) => {
     const address = socket.request.connection.remoteAddress;
     
     console.log(`New connection from address ${address}`, socket.id);
-
-        
+    
+    
     socket.on("createRoom", (id) => {
-        id = id + socket.id
-        socket.join(id);
-        rooms[id] = {
-            map: maps.random(),
-            players: {}
-        }
-        roomId = id;
-        console.log(`socket ${socket.id} created room ${rooms[id].map.label}`);
+        const createdRoomId = createRoom(socket, id);
+        roomId = createdRoomId;
     });
 
     socket.on("joinRoom", (id) => {
         if (rooms[id]) {
             roomId = id;
             socket.join(id);
-            console.log(`socket ${socket.id} joined room ${roomId}`);
+            console.log(`socket ${socket.id} joined room ${id}`);
+        } else {
+            const createdRoomId = createRoom(socket, id);
+            socket.emit("map", rooms[createdRoomId].map);
+            roomId = createdRoomId;
         }
     });
 

@@ -8,7 +8,7 @@ class JoinGame {
         this.sel.position(10, 10);
 
         socket.on("listRooms", (data) => {
-            this.rooms = data.filter(r => r.startsWith('room'));
+            this.rooms = data.filter(r => r.startsWith('_'));
             this.rooms.map(r => this.sel.option(r))
             if (!this.rooms.length) this.join.remove();
         });
@@ -20,8 +20,8 @@ class JoinGame {
         this.sel.remove();
         // add game id in url
         window.history.pushState({}, '', `?room=${gameId}`);
-        socket.emit("joinRoom", gameId);
         mgr.showScene(Game)
+        socket.emit("joinRoom", gameId);
     }
 
     draw() {

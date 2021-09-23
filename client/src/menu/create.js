@@ -8,9 +8,11 @@ class CreateGame {
 
     startGame() {
         this.start.remove();
-        socket.emit("createRoom", 'room');
-        window.history.pushState({}, '', `?room=room${socket.id}`);
         mgr.showScene(Game)
+        // lil random id;
+        const roomId = `_${(Math.random() + 1).toString(36).substring(7)}`;
+        socket.emit("createRoom", roomId);
+        window.history.pushState({}, '', `?room=${roomId}`);
     }
 
     draw() {
