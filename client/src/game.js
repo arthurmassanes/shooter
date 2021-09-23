@@ -96,6 +96,7 @@ class Game {
             strokeWeight(3);
             text(`connected players: ${Object.keys(this.otherPlayers).length + 1}`, 20, 20);
             text(`Map: ${this.terrain.mapLabel}`, 20, 50);
+            text(`FPS: ${floor(frameRate())}`, 20, 80);
         }
     }
 }
