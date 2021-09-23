@@ -33,13 +33,8 @@ const createRoom = (socket, id) => {
 
 const onPlayerInfo = (playerInfo, socket, roomId) => {
     const id = socket.id;
-    const {
-        position,
-        velocity,
-        health
-    } = playerInfo;
     if (rooms[roomId]) {
-        rooms[roomId].players[id] = { position, velocity, health };
+        rooms[roomId].players[id] = playerInfo;
     }
     // socket.emit('players', players);
 }

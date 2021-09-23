@@ -46,7 +46,9 @@ class Player {
             socket.emit("playerInfo", {
                 position: this.body.position,
                 velocity: this.body.velocity,
-                health: this.health
+                health: this.health,
+                animationState: this.animation.state,
+                isFacingLeft: this.animation.isFacingLeft
             });
             this.emitedPackages += 1;
         }

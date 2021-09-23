@@ -43,11 +43,17 @@ class Game {
         Object.keys(otherPlayersMap).map((playerId) => {
             // server data
             const playerData = otherPlayersMap[playerId];
-            const { position, velocity, health } = playerData;
+            const {
+                position,
+                velocity,
+                health,
+                animationState,
+                isFacingLeft,
+            } = playerData;
             // local object
             const otherPlayer = this.otherPlayers.find((p) => p.id === playerId);
-            if (otherPlayer) {
-                otherPlayer.update(position, velocity, health);
+            if (otherPlayer && playerData) {
+                otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
             } else {
                 const newPlayer = new OtherPlayer(playerId, position, velocity, health);
                 this.otherPlayers.push(newPlayer);

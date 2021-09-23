@@ -1,6 +1,7 @@
 class OtherPlayer {
     constructor(id, position, velocity, health = 100) {
         this.id = id;
+        this.animation = new Animation();
         this.health = health;
         this.healthBar = new HealthBar();
         this.width = PLAYER_HEIGHT;
@@ -12,11 +13,12 @@ class OtherPlayer {
         World.add(world, this.body);
     }
 
-    update(position, velocity, health) {
+    update(position, velocity, health, isFacingLeft, animationState) {
         this.position = position;
+        this.animation.state = animationState;
+        this.animation.isFacingLeft = isFacingLeft;
         this.health = health;
-        // console.log('applying pos and vel', position, velocity);
-        // console.log(this.body.position, this.body.velocity);
+
         Body.setVelocity(this.body, velocity);
         Body.setPosition(this.body, position);
     }
@@ -25,8 +27,7 @@ class OtherPlayer {
         // for now drawing only the received pos
         // (not the matter-computed estimation)
         const pos = this.position;
-        rectMode(CENTER);
-        rect(pos.x, pos.y, this.width, this.height);
+        this.animation.draw(pos, this.body.angle, this.body.velocity);
         this.healthBar.draw(pos, this.health);
     }
 

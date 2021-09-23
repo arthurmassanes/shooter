@@ -58,6 +58,7 @@ class Animation {
         }
         
         pop();
-        this.index += vel.x;
+        this.speed = vel.x || 0
+        this.index += this.speed;
     }
 }
