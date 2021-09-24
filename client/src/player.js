@@ -8,7 +8,7 @@ const matterPlayerOptions = {
 };
 
 class Player {
-    constructor(x = 200, y = 100) {
+    constructor(x = 200, y = 0) {
         this.animation = new Animation();
         this.health = 100;
         this.healthBar = new HealthBar();
@@ -63,6 +63,7 @@ class Player {
     }
 
     update() {
+        this.animation.update(this.isSteppingGround);
         this.limitMaxSpeed();
         this.jumpCoolDown++;
         const speed = this.isSteppingGround ? this.speed : this.airSpeed;

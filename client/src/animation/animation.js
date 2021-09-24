@@ -48,6 +48,11 @@ class Animation {
         return currentAnimation[animationIndex];
     }
     
+    // update the animation according to player
+    update(isSteppingGround) {
+        this.state = isSteppingGround ? ANIMATION_STATE.WALK : ANIMATION_STATE.JUMP;
+    }
+
     draw(pos, angle, vel) {
         push();
         imageMode(CENTER);
