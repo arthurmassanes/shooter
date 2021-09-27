@@ -67,7 +67,7 @@ class Animation {
         }
         
         pop();
-        this.speed = vel.x || 0
+        this.speed = this.state == ANIMATION_STATE.WALK ? vel.x : 0.5;
         this.index += this.speed;
     }
 }
