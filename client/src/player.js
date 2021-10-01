@@ -84,6 +84,9 @@ class Player {
             Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
             this.jumpCoolDown = 0;
         }
+        if (isPressingPunch()) {
+            this.animation.play(ANIMATION_STATE.PUNCH, 1); // play punch animation once
+        }
         this.stayInScreen();
     }
 

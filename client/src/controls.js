@@ -6,13 +6,18 @@ const CONTROLS = {
     DOWN: 40,
     LEFT: 37,
     RIGHT: 39,
+
     // WASD keys
     W: 87,
     A: 65,
     S: 83,
     D: 68,
+
+    // attack
+    PUNCH: 32,
 }
 
 const isPressingJump = () => keyIsDown(CONTROLS.UP) || keyIsDown(CONTROLS.W)
 const isPressingLeft = () => keyIsDown(CONTROLS.LEFT) || keyIsDown(CONTROLS.A)
 const isPressingRight = () => keyIsDown(CONTROLS.RIGHT) || keyIsDown(CONTROLS.D)
+const isPressingPunch = () => keyIsDown(CONTROLS.PUNCH)

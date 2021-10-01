@@ -12,13 +12,14 @@ var mgr;
 function setup() {
     frameRate(FPS);
     angleMode(RADIANS);  
-    createCanvas(gWidth, gHeight);
+    const canvas = createCanvas(gWidth, gHeight);
+    canvas.parent('p5-canvas');
 
     // check if joining game
     let params = getURLParams();
     mgr = new SceneManager();
     if (params.room) {
-        console.log(params.room);
+        console.log('joining', params.room);
         socket.emit("joinRoom", params.room);
         mgr.showScene(Game)
     } else mgr.showScene(Menu);

@@ -6,12 +6,15 @@ class Animation {
     constructor(spriteFolder = spritesFolders.COWBOY, state = ANIMATION_STATE.WALK) {
         this.frames = {
             WALK: [],
-            JUMP: []
+            JUMP: [],
+            PUNCH: [],
+            SHOOT: [],
         };
         this.index = 0;
         // defines which character sprite to use
         this.spriteFolder = spriteFolder;
-        
+        this.frameCount = 0; // used to reset animation for punch, shoot, etc
+
         this.loaded = false;
         this.speed = 0.4;
         this.state = state;
@@ -31,6 +34,18 @@ class Animation {
         });
     }
     
+    // play an animation animationState a with certain amount of repeat
+    play(animationState, times) {
+        const animation = this.getAnimationFramesByKey(animationState);
+
+        if (animation) {
+            this.state = animationState;
+            const frameAmount = animation.length * times; // for how many frames should the animation play
+            this.frameCount = frameAmount;
+            console.log(frameAmount);
+        }
+    }
+
     generateSpriteSheet(img, json, animationKey) {
         json.frames.map(f => {
             const { x, y, w, h } = f.frame;
@@ -40,8 +55,12 @@ class Animation {
         this.loaded = true;
     }
 
+    getAnimationFramesByKey(key) {
+        return this.frames[key.toUpperCase()];
+    }
+
     getCurrentFrame() {
-        const currentAnimation = this.frames[this.state.toUpperCase()];
+        const currentAnimation = this.getAnimationFramesByKey(this.state);
         if (!currentAnimation) return;
         const animationIndex = Math.abs(round(this.index)) % currentAnimation.length;
 
@@ -50,7 +69,11 @@ class Animation {
     
     // update the animation according to player
     update(isSteppingGround) {
-        this.state = isSteppingGround ? ANIMATION_STATE.WALK : ANIMATION_STATE.JUMP;
+        if (this.frameCount <= 0) {
+            this.state = isSteppingGround ? ANIMATION_STATE.WALK : ANIMATION_STATE.JUMP;
+        } else this.frameCount--;
+
+        this.speed = 0.4;
     }
 
     draw(pos, angle, vel) {
@@ -67,7 +90,7 @@ class Animation {
         }
         
         pop();
-        this.speed = this.state == ANIMATION_STATE.WALK ? vel.x : 0.5;
+        this.speed = this.state == ANIMATION_STATE.WALK ? vel.x : this.speed;
         this.index += this.speed;
     }
 }
