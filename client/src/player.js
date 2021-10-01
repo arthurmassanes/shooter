@@ -15,7 +15,7 @@ class Player {
         this.options = matterPlayerOptions;
         this.jumpCoolDown = 0;
         this.isSteppingGround = false;
-        this.speed = 0.2;
+        this.speed = 0.25;
         this.airSpeed = 0.04;
         this.height = PLAYER_HEIGHT;
         this.width = PLAYER_HEIGHT;
