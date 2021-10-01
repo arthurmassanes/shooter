@@ -3,3 +3,8 @@ const ANIMATION_STATE = {
     JUMP: 'jump',
     PUNCH: 'punch'
 }
+
+const ANIMATION_SPEEDS = {
+    JUMP: 0.4,
+    PUNCH: 1
+}

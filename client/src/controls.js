@@ -14,7 +14,7 @@ const CONTROLS = {
     D: 68,
 
     // attack
-    PUNCH: 32,
+    PUNCH: 69, // E KEY
 }
 
 const isPressingJump = () => keyIsDown(CONTROLS.UP) || keyIsDown(CONTROLS.W)

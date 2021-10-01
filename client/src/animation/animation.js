@@ -40,9 +40,9 @@ class Animation {
 
         if (animation) {
             this.state = animationState;
+            this.index = 0;
             const frameAmount = animation.length * times; // for how many frames should the animation play
             this.frameCount = frameAmount;
-            console.log(frameAmount);
         }
     }
 
@@ -59,6 +59,10 @@ class Animation {
         return this.frames[key.toUpperCase()];
     }
 
+    getAnimationSpeedByKey(key) {
+        return ANIMATION_SPEEDS[key.toUpperCase()] || 0;
+    }
+
     getCurrentFrame() {
         const currentAnimation = this.getAnimationFramesByKey(this.state);
         if (!currentAnimation) return;
@@ -73,7 +77,7 @@ class Animation {
             this.state = isSteppingGround ? ANIMATION_STATE.WALK : ANIMATION_STATE.JUMP;
         } else this.frameCount--;
 
-        this.speed = 0.4;
+        this.speed = this.getAnimationSpeedByKey(this.state);
     }
 
     draw(pos, angle, vel) {
@@ -90,7 +94,7 @@ class Animation {
         }
         
         pop();
-        this.speed = this.state == ANIMATION_STATE.WALK ? vel.x : this.speed;
+        this.speed = this.state == ANIMATION_STATE.WALK ? map(vel.x, -10, 10, -5, 5) : this.speed;
         this.index += this.speed;
     }
 }
