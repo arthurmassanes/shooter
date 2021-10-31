@@ -18,7 +18,7 @@ class Game {
           
         this.player = new Player();
         this.terrain = new Terrain(this.player);
-        this.otherPlayers = [] // array of OtherPlayer s
+        this.otherPlayers = {} // map of OtherPlayers, using id as key
 
         this.setupSocket();
     }
@@ -51,12 +51,12 @@ class Game {
                 isFacingLeft,
             } = playerData;
             // local object
-            const otherPlayer = this.otherPlayers.find((p) => p.id === playerId);
+            const otherPlayer = this.otherPlayers[playerId];
             if (otherPlayer && playerData) {
                 otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
             } else {
                 const newPlayer = new OtherPlayer(playerId, position, velocity, health);
-                this.otherPlayers.push(newPlayer);
+                this.otherPlayers[playerId] = newPlayer;
             }
         });
     }
@@ -64,15 +64,15 @@ class Game {
     deletePlayer(data) {
         const { id } = data;
 
-        const otherPlayer = this.otherPlayers.find((p) => p.id === id)
+        const otherPlayer = this.otherPlayers[id];
 
         if (otherPlayer) otherPlayer.delete();
-        this.otherPlayers = this.otherPlayers.filter((p) => p.id !== id)
+        delete this.otherPlayers[id];
 
     }
 
     drawOtherPlayers() {
-        this.otherPlayers.map((p) => p.draw());
+        Object.keys(this.otherPlayers).map((k) => this.otherPlayers[k].draw());
     }
 
     draw() {
