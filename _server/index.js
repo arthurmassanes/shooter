@@ -1,20 +1,18 @@
 // create the http and socket server
 const httpServer = require("http").createServer();
+const Game = require('./src/game');
 const io = require("socket.io")(httpServer, {
     cors: { origins: ["*"], methods: ["GET", "POST"] }
 })
 
 const maps = require("./maps/maps");
 
-const refreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
+const refreshInterval = 1000 / 60; // 60 time every 1000 milliseconds
 
 // object with room id as keys
-// contains players and map
+// and game objects as values
 const rooms = {
-    // 'some-room': {
-    //    players{}
-    //    map{}
-    //}
+    // 'some-room': new Game()
 }
 
 function getActiveRooms() {
@@ -23,11 +21,9 @@ function getActiveRooms() {
 
 const createRoom = (socket, id) => {
     socket.join(id);
-    rooms[id] = {
-        map: maps.random(),
-        players: {}
-    }
-    console.log(`socket ${socket.id} created ${id} on map ${rooms[id].map.label}`);
+    const game = new Game(id);
+    const interval = setInterval(() => game.update(), 1000 / 60);
+    rooms[id] = game;
     return id;
 }
 
@@ -55,6 +51,7 @@ io.on("connection", (socket) => {
         if (rooms[id]) {
             roomId = id;
             socket.join(id);
+            rooms[id].addPlayer(socket.id);
             console.log(`socket ${socket.id} joined room ${id}`);
         } else {
             const createdRoomId = createRoom(socket, id);
@@ -74,13 +71,8 @@ io.on("connection", (socket) => {
         if (room) socket.emit("map", room.map);
     });
 
-    // update player about other clients
-    setInterval(() => {
-        if (roomId && rooms[roomId]) { // emit player pos only if in game
-            socket.emit('players', rooms[roomId].players);
-        }
-    }, refreshInterval);
-
+    // socket.emit('players', rooms[roomId].players);
+    
     socket.on("playerInfo", (d) => onPlayerInfo(d, socket, roomId));
     socket.on("disconnect", () => {
         const room = rooms[roomId];
