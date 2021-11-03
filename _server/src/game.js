@@ -11,7 +11,10 @@ class Game {
         this.engine = Matter.Engine.create();
         this.world = this.engine.world;
         this.world.gravity.y = YGRAVITY;
+
+        this.map = undefined;
         this.players = {}; // map with player id as key
+        
         console.log('New game');
     }
     
@@ -22,7 +25,12 @@ class Game {
     update() {
         // Object.keys(this.players).map(k => console.log('player' +k, this.players[k].body));
         Matter.Engine.update(this.engine, 1000 / this.FPS);
+
         console.log('Game update', this.tick++);
+    }
+
+    getMap() {
+        return this.map
     }
 
     delete() {}
