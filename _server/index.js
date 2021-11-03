@@ -23,6 +23,7 @@ const createRoom = (socket, id) => {
     socket.join(id);
     const game = new Game(id);
     const interval = setInterval(() => game.update(), 1000 / 60);
+    game.addPlayer(socket.id);
     rooms[id] = game;
     return id;
 }
