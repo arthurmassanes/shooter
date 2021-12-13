@@ -19,17 +19,18 @@ class Game {
         this.player = new Player();
         this.terrain = new Terrain(this.player);
         this.otherPlayers = {} // map of OtherPlayers, using id as key
-
+        
         this.setupSocket();
     }
-
+    
     setupSocket() {
-        socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
-        socket.emit("map"); // request map info
-        socket.on("players", (data) => this.updatePlayerPositions(data));
+        this.player.id = socket.io.engine.id;
+        // socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
+        socket.emit("map"); // request map info from serv
+        socket.on("snapshot", (data) => this.updateGameObjects(data));
         socket.on("deletePlayer", (data) => this.deletePlayer(data));
         
-        setInterval(() => this.player.heartbeat(), playerRefreshInterval);
+        // setInterval(() => this.player.heartbeat(), playerRefreshInterval);
     }
 
     update() {
@@ -37,26 +38,26 @@ class Game {
         this.player.update();
     }
 
-    updatePlayerPositions(data) {
-        const otherPlayersMap = data;
-        delete otherPlayersMap[socket.id]; // dont keep own data
-        Object.keys(otherPlayersMap).map((playerId) => {
+    updateGameObjects(data) {
+        data.map((object) => {
             // server data
-            const playerData = otherPlayersMap[playerId];
             const {
+                id,
                 position,
                 velocity,
                 health,
                 animationState,
                 isFacingLeft,
-            } = playerData;
+            } = object;
             // local object
-            const otherPlayer = this.otherPlayers[playerId];
-            if (otherPlayer && playerData) {
+            const otherPlayer = this.otherPlayers[id];
+            if (otherPlayer && object.id) {
+                if (object.id == this.player.id) {}
                 otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
             } else {
-                const newPlayer = new OtherPlayer(playerId, position, velocity, health);
-                this.otherPlayers[playerId] = newPlayer;
+                console.log('new Other player', id)
+                const newPlayer = new OtherPlayer(id, position, velocity, health);
+                this.otherPlayers[id] = newPlayer;
             }
         });
     }
@@ -98,5 +99,6 @@ class Game {
             text(`Map: ${this.terrain.mapLabel}`, 20, 50);
             text(`FPS: ${floor(frameRate())}`, 20, 80);
         }
+        text(`Socket id: ${this.player.id}`, 20, 110);
     }
 }

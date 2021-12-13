@@ -9,7 +9,7 @@ class OtherPlayer {
         this.position = position;
         const options = { ...matterPlayerOptions, label: 'player ' + id }
         this.body = Bodies.rectangle(position.x, position.y, this.width, this.height, options);
-        Body.setVelocity(this.body, velocity);
+        if (velocity) Body.setVelocity(this.body, velocity);
         World.add(world, this.body);
     }
 

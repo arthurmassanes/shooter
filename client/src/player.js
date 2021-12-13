@@ -8,7 +8,8 @@ const matterPlayerOptions = {
 };
 
 class Player {
-    constructor(x = 200, y = 0) {
+    constructor(x = 200, y = 0, id = undefined) {
+        this.id = id;
         this.animation = new Animation();
         this.health = 100;
         this.healthBar = new HealthBar();
@@ -79,7 +80,8 @@ class Player {
         // const isCollidingWithGround = Matter.SAT.collides(this.body, terrain.ground.body).collided;
         if (isPressingJump() && this.isSteppingGround
             // limit jump to twice per second
-        && this.jumpCoolDown >= FPS / 2) {
+            && this.jumpCoolDown >= FPS / 2
+        ) {
             this.isSteppingGround = false;
             Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
             this.jumpCoolDown = 0;

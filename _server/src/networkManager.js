@@ -1,4 +1,6 @@
 const http = require("http");
+const gameloop = require('node-gameloop');
+
 const Game = require('./game');
 
 class NetworkManager {
@@ -19,19 +21,29 @@ class NetworkManager {
     }
 
     getActiveRooms() {
-        return [ ...this.io.sockets.adapter.rooms.keys() ]
+        return [...this.io.sockets.adapter.rooms.keys()]
+    }
+
+    updateGame(game, delta) {
+        game.update(delta);
+
+        this.io.to(game.id).emit("snapshot", game.getSnapshot());
     }
 
     createRoom(socket, roomId) {
         socket.join(roomId);
-        const game = new Game(roomId);
-        const interval = setInterval(() => game.update(), 1000 / 60);
-        game.addPlayer(socket.roomId);
-        this.rooms[roomId] = game;
         socket.roomId = roomId;
+
+        const game = new Game(roomId);
+        this.rooms[roomId] = game;
+        game.addPlayer(socket.roomId);
+
+        const loop = gameloop.setGameLoop(delta => this.updateGame(game, delta));
+        game.setLoop(loop);
+
         return roomId;
     }
-    
+
     joinRoom(socket, roomId) {
         if (this.rooms[roomId]) {
             socket.join(roomId);

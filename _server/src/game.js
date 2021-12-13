@@ -11,6 +11,7 @@ class Game {
         this.engine = Matter.Engine.create();
         this.world = this.engine.world;
         this.world.gravity.y = YGRAVITY;
+        this.loop = undefined; // node-gameloop object
 
         this.map = undefined;
         this.players = {}; // map with player id as key
@@ -22,11 +23,29 @@ class Game {
         this.players[playerId] = new Player(this.world, playerId);
     }
 
-    update() {
-        // Object.keys(this.players).map(k => console.log('player' +k, this.players[k].body));
-        Matter.Engine.update(this.engine, 1000 / this.FPS);
+    removePlayer(playerId) {
+        const p = this.players[playerId];
+        if (p) {
+            p.delete(this.world);
+            delete this.players[playerId];
+        }
+    }
 
-        console.log('Game update', this.tick++);
+    update(delta) {
+        // Object.keys(this.players).map(k => console.log('player' +k, this.players[k].body));
+        Matter.Engine.update(this.engine, delta);
+    }
+
+    setLoop(loop) {
+        this.loop = loop
+    }
+
+    getSnapshot() {
+        const objectsArray = Object.keys(this.players).map((key) => {
+            const player = this.players[key];
+            return player.getData();
+        });
+        return objectsArray;
     }
 
     getMap() {
