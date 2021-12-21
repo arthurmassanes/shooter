@@ -16,6 +16,7 @@ class Game {
         world = engine.world;
         world.gravity.y = YGRAVITY;
           
+        this.connectionError = false;
         this.player = new Player();
         this.terrain = new Terrain(this.player);
         this.otherPlayers = {} // map of OtherPlayers, using id as key
@@ -26,6 +27,7 @@ class Game {
     setupSocket() {
         this.player.id = socket.io.engine.id;
         // socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
+        socket.on("connect_failure", () => this.connectionError = true);
         socket.emit("map"); // request map info from serv
         socket.on("snapshot", (data) => this.updateGameObjects(data));
         socket.on("deletePlayer", (data) => this.deletePlayer(data));
@@ -76,15 +78,7 @@ class Game {
         Object.keys(this.otherPlayers).map((k) => this.otherPlayers[k].draw());
     }
 
-    draw() {
-
-        this.update();
-
-        background(41);
-        this.terrain.draw();
-        this.player.draw();
-        this.drawOtherPlayers();
-
+    drawHUD() {
         noStroke();
         textSize(24);
         fill("white");
@@ -100,5 +94,21 @@ class Game {
             text(`FPS: ${floor(frameRate())}`, 20, 80);
         }
         text(`Socket id: ${this.player.id}`, 20, 110);
+        if (this.connectionError) {
+            stroke("red");
+            strokeWeight(5);
+            text("Connection problems...");
+        }
+    }
+
+    draw() {
+
+        this.update();
+
+        background(41);
+        this.terrain.draw();
+        this.player.draw();
+        this.drawOtherPlayers();
+
     }
 }

@@ -41,6 +41,7 @@ class NetworkManager {
         const loop = gameloop.setGameLoop(delta => this.updateGame(game, delta));
         game.setLoop(loop);
 
+        socket.emit("newGame");
         return roomId;
     }
 
@@ -50,6 +51,7 @@ class NetworkManager {
             this.rooms[roomId].addPlayer(socket.id);
             console.log(`socket ${socket.id} joined room ${roomId}`);
             socket.roomId = roomId;
+            socket.emit("newGame");
             // socket.emit("map", this.rooms[roomId]);
         } else {
             socket.roomId = this.createRoom(socket, roomId);
