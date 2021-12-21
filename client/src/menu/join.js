@@ -1,27 +1,42 @@
 class JoinGame {
     setup() {
+        socket.on("newGame", (gameId) => this.onNewGame(gameId));
         this.rooms = [];
+        this.isLoading = false;
+        this.noRooms = false;
+        this.spinner = new Spinner();
         this.join = createButton('Join');
         this.join.position(gWidth / 2, gHeight / 2);
-        this.join.mousePressed(() => this.joinGame(this.sel.value()));
+        this.join.mousePressed(() => this.onClickJoin(this.sel.value()));
         this.sel = createSelect();
         this.sel.position(10, 10);
 
-        socket.on("listRooms", (data) => {
+        socket.on("listRooms", data => {
+            // Room name will always start with _
+            // TODO: Allow to pick a name
             this.rooms = data.filter(r => r.startsWith('_'));
-            this.rooms.map(r => this.sel.option(r))
-            if (!this.rooms.length) this.join.remove();
+            this.rooms.map(r => this.sel.option(r));
+            if (!this.rooms.length) {
+                this.sel.remove();
+                this.join.remove();
+                this.noRooms = true;
+            }
         });
         socket.emit("listRooms");
     }
 
-    joinGame(gameId) {
+    onClickJoin(gameId) {
+        this.isLoading = true;
         this.join.remove();
         this.sel.remove();
-        // add game id in url
-        window.history.pushState({}, '', `?room=${gameId}`);
-        mgr.showScene(Game)
+
         socket.emit("joinRoom", gameId);
+    }
+
+    onNewGame(gameId) {
+        // add game id in url
+        mgr.showScene(Game);
+        window.history.pushState({}, '', `?room=${gameId}`);
     }
 
     draw() {
@@ -29,6 +44,9 @@ class JoinGame {
         noStroke();
         textSize(24);
         fill("white");
-        if (this.rooms.length <= 0) text('No rooms found. Create your own!', 100, 100);
+        if (this.noRooms) {
+            text('No rooms found. Create your own!', 100, 100);
+        }
+        if (this.isLoading) this.spinner.draw();
     }
 }
