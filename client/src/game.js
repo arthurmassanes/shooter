@@ -7,23 +7,24 @@ var Engine = Matter.Engine,
   Constraint = Matter.Constraint,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint;
-  
+
 const playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
+
 class Game {
     setup() {
         // physics engine
         engine = Engine.create();
         world = engine.world;
         world.gravity.y = YGRAVITY;
-          
+
         this.connectionError = false;
         this.player = new Player();
         this.terrain = new Terrain(this.player);
         this.otherPlayers = {} // map of OtherPlayers, using id as key
-        
+
         this.setupSocket();
     }
-    
+
     setupSocket() {
         this.player.id = socket.io.engine.id;
         // socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
@@ -31,7 +32,7 @@ class Game {
         socket.emit("map"); // request map info from serv
         socket.on("snapshot", (data) => this.updateGameObjects(data));
         socket.on("deletePlayer", (data) => this.deletePlayer(data));
-        
+
         // setInterval(() => this.player.heartbeat(), playerRefreshInterval);
     }
 
