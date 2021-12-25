@@ -69,7 +69,6 @@ class Game {
         const { id } = data;
 
         const otherPlayer = this.otherPlayers[id];
-
         if (otherPlayer) otherPlayer.delete();
         delete this.otherPlayers[id];
 

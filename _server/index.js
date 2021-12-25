@@ -17,8 +17,8 @@ const onPlayerInfo = (playerInfo, socket, roomId) => {
 networkManager.io.on("connection", (socket) => {
     const address = socket.request.connection.remoteAddress;
     console.log(`New connection from address ${address}`, socket.id);
-    
-    
+
+
     socket.on("createRoom", (id) => socket.roomId = networkManager.createRoom(socket, id));
 
     socket.on("joinRoom", (id) => socket.roomId = networkManager.joinRoom(socket, id));
@@ -33,7 +33,7 @@ networkManager.io.on("connection", (socket) => {
 
     // interval
     // socket.emit('players', networkManager.rooms[roomId].players);
-    
+
     // socket.on("playerInfo", (d) => onPlayerInfo(d, socket, roomId));
-    socket.on("disconnect", () => networkManager.disconnect(socket, socket.roomId));
+    socket.on("disconnect", () => networkManager.disconnect(socket));
 })

@@ -33,10 +33,11 @@ class NetworkManager {
     createRoom(socket, roomId) {
         socket.join(roomId);
         socket.roomId = roomId;
+        console.log("+ Created room", socket.roomId)
 
         const game = new Game(roomId);
         this.rooms[roomId] = game;
-        game.addPlayer(socket.roomId);
+        game.addPlayer(socket.id);
 
         const loop = gameloop.setGameLoop(delta => this.updateGame(game, delta));
         game.setLoop(loop);
@@ -47,15 +48,17 @@ class NetworkManager {
 
     joinRoom(socket, roomId) {
         if (this.rooms[roomId]) {
+            socket.roomId = roomId;
             socket.join(roomId);
             this.rooms[roomId].addPlayer(socket.id);
             console.log(`socket ${socket.id} joined room ${roomId}`);
-            socket.roomId = roomId;
+            this.rooms[roomId].print();
             socket.emit("newGame", roomId);
             // socket.emit("map", this.rooms[roomId]);
         } else {
             socket.roomId = this.createRoom(socket, roomId);
         }
+        return roomId;
     }
 
     sendMap(socket) {
@@ -63,14 +66,14 @@ class NetworkManager {
         if (game) socket.emit("map", game.getMap());
     }
 
-    disconnect(socket, roomId) {
+    disconnect(socket) {
+        const roomId = socket.roomId;
         const game = this.rooms[roomId];
         if (game && roomId) {
-            console.log('Leaving room ' + roomId);
-            game.removePlayer[socket.id];
+            game.removePlayer(socket.id);
             this.io.sockets.emit('deletePlayer', { id: socket.id });
         }
-        console.log(`Client disconnected: ${socket.id}`);
+        console.log(`- Client disconnected: ${socket.id}`);
     }
 }
 

@@ -19,7 +19,7 @@ class Player {
         this.animationState = ANIMATION_STATE.WALK;
         this.body = Matter.Bodies.rectangle(pos.x, pos.y, this.width, this.height, matterPlayerOptions);
         Matter.World.add(world, this.body);
-        console.log('Created player');
+        console.log('+ Created player');
     }
 
     getData() {
@@ -36,7 +36,6 @@ class Player {
 
     delete(world) {
         Matter.World.remove(world, this.body);
-        console.log('removed')
     }
 }
 

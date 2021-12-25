@@ -14,9 +14,7 @@ class Game {
         this.loop = undefined; // node-gameloop object
 
         this.map = undefined;
-        this.players = {}; // map with player id as key
-        
-        console.log('New game');
+        this.players = {}; // map with player id as key        
     }
     
     addPlayer(playerId) {
@@ -29,6 +27,14 @@ class Game {
             p.delete(this.world);
             delete this.players[playerId];
         }
+    }
+
+    print() {
+        console.log(`Game room with id: ${this.id}, with players:`);
+        Object.keys(this.players).map(id => {
+            const p = this.players[id];
+            console.log('Player: ' + p.id);
+        });
     }
 
     update(delta) {
