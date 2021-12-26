@@ -16,7 +16,7 @@ const onPlayerInfo = (playerInfo, socket, roomId) => {
 
 networkManager.io.on("connection", (socket) => {
     const address = socket.request.connection.remoteAddress;
-    console.log(`New connection from address ${address}`, socket.id);
+    console.log("\x1b[32m", `+ New connection from address ${address}`, socket.id, "\x1b[0m");
 
 
     socket.on("createRoom", (id) => socket.roomId = networkManager.createRoom(socket, id));

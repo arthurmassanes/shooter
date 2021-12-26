@@ -73,7 +73,7 @@ class NetworkManager {
             game.removePlayer(socket.id);
             this.io.sockets.emit('deletePlayer', { id: socket.id });
         }
-        console.log(`- Client disconnected: ${socket.id}`);
+        console.log("\x1b[34m", `- Client disconnected: ${socket.id}`, "\x1b[0m");
     }
 }
 
