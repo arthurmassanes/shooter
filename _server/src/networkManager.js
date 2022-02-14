@@ -9,9 +9,10 @@ class NetworkManager {
         const httpServer = http.createServer();
         this.io = require("socket.io")(httpServer, {
             cors: { origins: ["*"], methods: ["GET", "POST"] }
-        })
-        httpServer.listen(process.env.PORT || 3000);
-        console.log('Server started')
+        });
+        const port = process.env.PORT || 3000;
+        httpServer.listen(port);
+        console.log('Server started on port ' + port);
 
         // object with room id as keys
         // and game objects as values
