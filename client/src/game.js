@@ -26,7 +26,7 @@ class Game {
     }
 
     setupSocket() {
-        this.player.id = socket.io.engine.id;
+        this.player.id = socket.id;
         // socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
         socket.on("connect_failure", () => this.connectionError = true);
         socket.emit("map"); // request map info from serv
@@ -54,13 +54,13 @@ class Game {
             } = object;
             // local object
             const otherPlayer = this.otherPlayers[id];
-            if (otherPlayer && object.id) {
-                if (object.id == this.player.id) {}
-                otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
-            } else {
-                console.log('new Other player', id)
-                const newPlayer = new OtherPlayer(id, position, velocity, health);
-                this.otherPlayers[id] = newPlayer;
+            if (object.id !== this.player.id) {
+                if (otherPlayer && object.id) {
+                    otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
+                } else {
+                    const newPlayer = new OtherPlayer(id, position, velocity, health);
+                    this.otherPlayers[id] = newPlayer;
+                }
             }
         });
     }
