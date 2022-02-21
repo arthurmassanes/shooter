@@ -10,6 +10,7 @@ class Game {
         this.tick = 0;
         this.engine = Matter.Engine.create();
         this.world = this.engine.world;
+        this.initCollisions();
         this.world.gravity.y = YGRAVITY;
         this.loop = undefined; // node-gameloop object
 
@@ -17,6 +18,22 @@ class Game {
         this.players = {}; // map with player id as key        
     }
     
+    initCollisions() {
+        console.log("\x1b[35m", `- Init collisions for game: ${this.id}`, "\x1b[0m");
+        Matter.Events.on(this.engine, 'collisionStart', function(event) {
+            var pairs = event.pairs || [];
+            pairs.forEach(({ bodyA, bodyB }) => {
+                if (bodyA.label == "ground" && bodyB.label == "player"
+                    || bodyA.label == "player" && bodyB.label == "ground"
+                    // || bodyA.label == "player" && bodyB.label == "player"
+                ) {
+                    console.log('collision between player and ground')
+                    // player.isSteppingGround = true;
+                }
+            });
+       });
+    }
+
     addPlayer(playerId) {
         this.players[playerId] = new Player(this.world, playerId);
     }
@@ -55,7 +72,9 @@ class Game {
     }
 
     getMap() {
-        return this.map
+        return ({
+
+        });
     }
 
     delete() {}

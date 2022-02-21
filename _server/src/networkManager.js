@@ -51,10 +51,12 @@ class NetworkManager {
         if (this.rooms[roomId]) {
             socket.roomId = roomId;
             socket.join(roomId);
-            this.rooms[roomId].addPlayer(socket.id);
-            console.log(`socket ${socket.id} joined room ${roomId}`);
-            this.rooms[roomId].print();
+            const game = this.rooms[roomId];
+            game.addPlayer(socket.id);
+            console.log(`socket ${socket.id} joined room ${roomId}, with snapshot:`, game.getSnapshot());
+            game.print();
             socket.emit("newGame", roomId);
+            socket.emit("map", game.getMap());
             // socket.emit("map", this.rooms[roomId]);
         } else {
             socket.roomId = this.createRoom(socket, roomId);

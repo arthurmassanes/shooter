@@ -8,8 +8,6 @@ var Engine = Matter.Engine,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint;
 
-const playerRefreshInterval = 1000 / 20; // 20 time every 1000 milliseconds
-
 class Game {
     setup() {
         // physics engine

@@ -89,7 +89,7 @@ class Player {
         if (isPressingPunch()) {
             this.animation.play(ANIMATION_STATE.PUNCH, 1); // play punch animation once
         }
-        this.stayInScreen();
+        // this.stayInScreen();
     }
 
     // constrain the player to the screen
