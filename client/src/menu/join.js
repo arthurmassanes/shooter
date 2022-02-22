@@ -13,7 +13,7 @@ class JoinGame {
 
         socket.on("listRooms", data => {
             // Room name will always start with _
-            // TODO: Allow to pick a name
+            // TODO: Allow to pick a room name
             this.rooms = data.filter(r => r.startsWith('_'));
             this.rooms.map(r => this.sel.option(r));
             if (!this.rooms.length) {

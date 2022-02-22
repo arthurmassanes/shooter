@@ -25,7 +25,7 @@ class Game {
 
     setupSocket() {
         this.player.id = socket.id;
-        // socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
+        socket.on("map", (terrainData) => this.terrain.generateObstacles(terrainData));
         socket.on("connect_failure", () => this.connectionError = true);
         socket.emit("map"); // request map info from serv
         socket.on("snapshot", (data) => this.updateGameObjects(data));
@@ -40,7 +40,12 @@ class Game {
     }
 
     updateGameObjects(data) {
-        data.map((object) => {
+        const { players } = data;
+        this.updatePlayers(players);
+    }
+
+    updatePlayers(players) {
+        Object.keys(players).forEach(player => {
             // server data
             const {
                 id,
@@ -49,11 +54,11 @@ class Game {
                 health,
                 animationState,
                 isFacingLeft,
-            } = object;
+            } = player;
             // local object
             const otherPlayer = this.otherPlayers[id];
-            if (object.id !== this.player.id) {
-                if (otherPlayer && object.id) {
+            if (player.id !== this.player.id) {
+                if (otherPlayer && otherPlayer.id) {
                     otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
                 } else {
                     const newPlayer = new OtherPlayer(id, position, velocity, health);
@@ -61,6 +66,7 @@ class Game {
                 }
             }
         });
+
     }
 
     deletePlayer(data) {

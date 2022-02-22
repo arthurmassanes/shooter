@@ -67,11 +67,12 @@ class Game {
     }
 
     getSnapshot() {
-        const objectsArray = Object.keys(this.players).map((key) => {
-            const player = this.players[key];
-            return player.getData();
-        });
-        return objectsArray;
+        // TODO add all info here about non static objects
+
+        // Convert map of class instance to JSON
+        const players = {};
+        Object.entries(this.players).forEach(([key, value]) => players[key] = value.getData());
+        return ({ players });
     }
 
     getMap() {

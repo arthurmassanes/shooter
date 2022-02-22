@@ -1,5 +1,8 @@
+const { Bodies, Body, World } = require('matter-js');
+
 class Obstacle {
     constructor({
+        world,
         width, height, position,
         filepath,
         isStatic,

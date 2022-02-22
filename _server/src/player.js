@@ -30,7 +30,7 @@ class Player {
             position: this.body.position,
             health: this.health,
             animationState: this.animationState,
-            isFacingLeft: true, // remove later
+            isFacingLeft: true, // TODO: remove later
         })
     }
 
