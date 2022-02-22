@@ -56,7 +56,7 @@ class NetworkManager {
             console.log(`socket ${socket.id} joined room ${roomId}, with snapshot:`, game.getSnapshot());
             game.print();
             socket.emit("newGame", roomId);
-            socket.emit("map", game.getMap());
+            // socket.emit("map", game.getMap());
             // socket.emit("map", this.rooms[roomId]);
         } else {
             socket.roomId = this.createRoom(socket, roomId);

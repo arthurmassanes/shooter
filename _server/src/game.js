@@ -2,6 +2,8 @@ const Matter = require('matter-js');
 
 const Player = require('./player')
 
+const TerrainManager = require('./terrainManager');
+
 const YGRAVITY = 3;
 class Game {
     constructor(id) {
@@ -14,7 +16,8 @@ class Game {
         this.world.gravity.y = YGRAVITY;
         this.loop = undefined; // node-gameloop object
 
-        this.map = undefined;
+        // TODO: Make user choose a map
+        this.terrainManager = new TerrainManager(this.world);
         this.players = {}; // map with player id as key        
     }
     
