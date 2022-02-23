@@ -76,12 +76,12 @@ class Game {
     }
 
     getMap() {
-        return ({
-
-        });
+        return this.terrainManager.getMap();
     }
 
-    delete() {}
+    delete() {
+        // TODO delete objects and ids (key in map)
+    }
 }
 
 module.exports = Game;

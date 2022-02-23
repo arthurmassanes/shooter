@@ -14,7 +14,6 @@ class TerrainManager {
 
     // deletes game objects (useful to rebuild the map)
     removeObstacles() {
-        this.backgroundImage = undefined;
         this.obstacles.map(o => o.remove());
         this.obstacles = [];
     }
@@ -33,6 +32,14 @@ class TerrainManager {
             this.obstacles.push(new Obstacle({ world, filepath, position, isStatic, restitution, angle }));
         }
         this.isLoading = false;
+    }
+
+    getMap() {
+        return ({
+            obstacles: this.obstacles.map(o => o.getData()),
+            label: this.label,
+            filepath: this.backgroundImage,
+        });
     }
 }
 

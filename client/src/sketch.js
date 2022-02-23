@@ -19,7 +19,6 @@ function setup() {
     // check if joining game
     const params = getURLParams();
     if (params.room) {
-        console.log(params.room);
         socket.on("newGame", () => mgr.showScene(Game));
         socket.emit("joinRoom", params.room);
     } else mgr.showScene(Menu);

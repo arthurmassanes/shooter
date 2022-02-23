@@ -61,13 +61,11 @@ class Game {
                 if (otherPlayer) {
                     otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
                 } else {
-                    console.log('player:', id, position, velocity, health);
                     const newPlayer = new OtherPlayer(id, position, velocity, health);
                     this.otherPlayers[id] = newPlayer;
                 }
             }
         });
-
     }
 
     deletePlayer(data) {
