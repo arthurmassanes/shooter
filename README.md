@@ -6,3 +6,4 @@
 - [ ] Send relevant map data (in createRoom or joinRoom of networkManager and sendMap)
 - [ ] Send current player inputs -> modif server-side
 - [ ] Fix animations
+- [ ] Remove game if no players

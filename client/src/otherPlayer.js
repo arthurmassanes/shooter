@@ -7,6 +7,7 @@ class OtherPlayer {
         this.width = PLAYER_HEIGHT;
         this.height = PLAYER_HEIGHT;
         this.position = position;
+        console.log({position})
         const options = { ...matterPlayerOptions, label: 'player ' + id }
         this.body = Bodies.rectangle(position.x, position.y, this.width, this.height, options);
         if (velocity) Body.setVelocity(this.body, velocity);

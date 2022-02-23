@@ -29,6 +29,9 @@ class Terrain {
     }
 
     generateObstacles(serverData) {
+        // if empty object do nothing
+        if (!Object.entries(serverData).length) return;
+
         this.removeObstacles();
         this.mapLabel = serverData.label;
         const filepath = serverData.filepath; // the background

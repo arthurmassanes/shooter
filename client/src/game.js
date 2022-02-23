@@ -45,7 +45,7 @@ class Game {
     }
 
     updatePlayers(players) {
-        Object.keys(players).forEach(player => {
+        Object.keys(players).forEach(key => {
             // server data
             const {
                 id,
@@ -54,13 +54,14 @@ class Game {
                 health,
                 animationState,
                 isFacingLeft,
-            } = player;
+            } = players[key];
             // local object
             const otherPlayer = this.otherPlayers[id];
-            if (player.id !== this.player.id) {
-                if (otherPlayer && otherPlayer.id) {
+            if (id !== this.player.id) {
+                if (otherPlayer) {
                     otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
                 } else {
+                    console.log('player:', id, position, velocity, health);
                     const newPlayer = new OtherPlayer(id, position, velocity, health);
                     this.otherPlayers[id] = newPlayer;
                 }
