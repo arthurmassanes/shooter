@@ -10,6 +10,7 @@ class OtherPlayer {
         this.body = Bodies.rectangle(position.x, position.y, this.width, this.height, options);
         if (velocity) Body.setVelocity(this.body, velocity);
         World.add(world, this.body);
+        console.log('other player joined:', this.id, this.body);
     }
 
     update(position, velocity, health, isFacingLeft, animationState) {

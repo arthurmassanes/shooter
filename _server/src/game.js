@@ -11,6 +11,7 @@ class Game {
         this.FPS = 60;
         this.tick = 0;
         this.engine = Matter.Engine.create();
+        Matter.Runner.run(this.engine);
         this.world = this.engine.world;
         this.initCollisions();
         this.world.gravity.y = YGRAVITY;

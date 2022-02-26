@@ -25,7 +25,7 @@ class Player {
         this.maxSpeed = 10;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
-        console.log('+ Created player ' + this.id, this.body);
+        console.log('+ Created player ' + this.id);
     }
 
     generateRandomColor() {
@@ -50,12 +50,10 @@ class Player {
     }
 
     updateFromServer({ position, velocity, health, animationState }) {
-        console.log('updated from servie', position, velocity)
         Body.setPosition(this.body, position);
         Body.setVelocity(this.body, velocity);
         this.health = health;
         this.animation.state = animationState;
-        rect(position.x, position.y, this.width,this.height)
     }
 
     update() {

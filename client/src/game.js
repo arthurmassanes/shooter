@@ -41,7 +41,6 @@ class Game {
     }
 
     updateGameObjects(data) {
-        console.log('snapshot received', data)
         const { players } = data;
         this.updatePlayers(players);
     }
