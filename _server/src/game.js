@@ -11,7 +11,6 @@ class Game {
         this.FPS = 60;
         this.tick = 0;
         this.engine = Matter.Engine.create();
-        Matter.Runner.run(this.engine);
         this.world = this.engine.world;
         this.initCollisions();
         this.world.gravity.y = YGRAVITY;
@@ -61,7 +60,7 @@ class Game {
 
     update(delta) {
         // Object.keys(this.players).map(id => console.log(this.players[id].getData()));
-        Matter.Engine.update(this.engine, delta);
+        Matter.Engine.update(this.engine);
     }
 
     setLoop(loop) {
