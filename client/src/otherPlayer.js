@@ -6,7 +6,6 @@ class OtherPlayer {
         this.healthBar = new HealthBar();
         this.width = PLAYER_HEIGHT;
         this.height = PLAYER_HEIGHT;
-        this.position = position;
         const options = { ...matterPlayerOptions, label: 'player ' + id }
         this.body = Bodies.rectangle(position.x, position.y, this.width, this.height, options);
         if (velocity) Body.setVelocity(this.body, velocity);
@@ -14,7 +13,6 @@ class OtherPlayer {
     }
 
     update(position, velocity, health, isFacingLeft, animationState) {
-        this.position = position;
         this.animation.state = animationState;
         this.animation.isFacingLeft = isFacingLeft;
         this.health = health;
@@ -24,9 +22,7 @@ class OtherPlayer {
     }
 
     draw() {
-        // for now drawing only the received pos
-        // (not the matter-computed estimation)
-        const pos = this.position;
+        const pos = this.body.position;
         this.animation.draw(pos, this.body.angle, this.body.velocity);
         this.healthBar.draw(pos, this.health);
     }

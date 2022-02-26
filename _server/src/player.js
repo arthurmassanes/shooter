@@ -19,7 +19,7 @@ class Player {
         this.animationState = ANIMATION_STATE.WALK;
         this.body = Matter.Bodies.rectangle(pos.x, pos.y, this.width, this.height, matterPlayerOptions);
         Matter.World.add(world, this.body);
-        console.log('+ Created player ' + this.id);
+        console.log('+ Created player ' + this.id, this.body);
     }
 
     getData() {

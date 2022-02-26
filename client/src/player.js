@@ -4,7 +4,8 @@ const matterPlayerOptions = {
     label: 'player',
     frictionAir: 0.05,
     friction: 0.5,
-    density: 0.002
+    density: 0.002,
+    isStatic: true,
 };
 
 class Player {
@@ -22,9 +23,9 @@ class Player {
         this.width = PLAYER_HEIGHT;
         this.jumpHeight = 1;
         this.maxSpeed = 10;
-        this.emitedPackages = 0;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
+        console.log('+ Created player ' + this.id, this.body);
     }
 
     generateRandomColor() {
@@ -40,27 +41,21 @@ class Player {
         return (vel.x !== 0 || vel.y !== 0)
     }
 
-    // emit playerInfo data to server
-    heartbeat() {
-        const body = this.body;
-        if (body) {
-            socket.emit("playerInfo", {
-                position: this.body.position,
-                velocity: this.body.velocity,
-                health: this.health,
-                animationState: this.animation.state,
-                isFacingLeft: this.animation.isFacingLeft
-            });
-            this.emitedPackages += 1;
-        }
-    }
-
     limitMaxSpeed() {
         const vel = this.body.velocity;
 
         vel.x = vel.x >= this.maxSpeed ? this.maxSpeed : vel.x;
         vel.x = vel.x <= -this.maxSpeed ? -this.maxSpeed : vel.x;
         Body.setVelocity(this.body, vel);
+    }
+
+    updateFromServer({ position, velocity, health, animationState }) {
+        console.log('updated from servie', position, velocity)
+        Body.setPosition(this.body, position);
+        Body.setVelocity(this.body, velocity);
+        this.health = health;
+        this.animation.state = animationState;
+        rect(position.x, position.y, this.width,this.height)
     }
 
     update() {

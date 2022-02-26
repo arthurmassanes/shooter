@@ -26,6 +26,7 @@ class Obstacle {
         if (angle) Body.setAngle(this.body, angle);
         if (restitution) this.body.restitution = restitution;
         World.add(world, this.body);
+        console.log(this.body.position, width, height);
     }
     
     remove() {

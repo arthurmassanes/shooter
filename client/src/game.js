@@ -19,6 +19,7 @@ class Game {
         this.player = new Player();
         this.terrain = new Terrain(this.player);
         this.otherPlayers = {} // map of OtherPlayers, using id as key
+        console.log(this.terrain.obstacles.length, world.gravity);
 
         this.setupSocket();
     }
@@ -58,13 +59,13 @@ class Game {
             } = players[key];
             // local object
             const otherPlayer = this.otherPlayers[id];
-            if (id !== this.player.id) {
-                if (otherPlayer) {
-                    otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
-                } else {
-                    const newPlayer = new OtherPlayer(id, position, velocity, health);
-                    this.otherPlayers[id] = newPlayer;
-                }
+            if (id === this.player.id) {
+                this.player.updateFromServer({ position, velocity, health, animationState });
+            } else if (otherPlayer) {
+                otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
+            } else {
+                const newPlayer = new OtherPlayer(id, position, velocity, health);
+                this.otherPlayers[id] = newPlayer;
             }
         });
     }

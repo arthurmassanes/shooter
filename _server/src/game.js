@@ -18,7 +18,7 @@ class Game {
 
         // TODO: Make user choose a map
         this.terrainManager = new TerrainManager(this.world);
-        this.players = {}; // map with player id as key        
+        this.players = {}; // map with player id as key
     }
     
     initCollisions() {
@@ -35,6 +35,7 @@ class Game {
                 }
             });
        });
+       console.log('collision ready')
     }
 
     addPlayer(playerId) {
@@ -58,6 +59,7 @@ class Game {
     }
 
     update(delta) {
+        // Object.keys(this.players).map(id => console.log(this.players[id].getData()));
         Matter.Engine.update(this.engine, delta);
     }
 
