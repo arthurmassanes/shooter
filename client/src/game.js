@@ -36,10 +36,11 @@ class Game {
 
     update() {
         Engine.update(engine);
-        this.player.update();
+        // this.player.update();
     }
 
     updateGameObjects(data) {
+        console.log('snapshot received', data)
         const { players } = data;
         this.updatePlayers(players);
     }

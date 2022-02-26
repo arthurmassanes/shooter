@@ -12,14 +12,18 @@ module.exports = {
                 {
                     filepath: 'assets/maps/rocky/obstacle1.png',
                     position: { x: 1020, y: 670 },
+                    width: 520,
+                    height: 99,
                     isStatic: true,
-                    // angle: 0.1,
+                    // angle: 0,
                 },
                 {
                     filepath: 'assets/maps/rocky/obstacle2.png',
                     position: { x: 295, y: 670 },
+                    width: 590,
+                    height: 99,
                     isStatic: true,
-                    // angle: 0.1,
+                    // angle: 0,
                 },
             ]
         },

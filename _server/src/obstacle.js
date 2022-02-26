@@ -9,6 +9,7 @@ class Obstacle {
         restitution,
         angle 
     }) {
+        this.world = world;
         this.width = width;
         this.height = height;
         this.filepath = filepath;
@@ -19,6 +20,7 @@ class Obstacle {
             density: 0.5,
         }
 
+        if (!width || !height) throw new Error('Obstacle has no dimensions')
         // Create Matter object
         this.body = Bodies.rectangle(position.x, position.y, this.width, this.height, this.options);
         if (angle) Body.setAngle(this.body, angle);
@@ -27,7 +29,7 @@ class Obstacle {
     }
     
     remove() {
-        if (this.body) World.remove(world, this.body);
+        if (this.body) World.remove(this.world, this.body);
     }
 
     getData() {

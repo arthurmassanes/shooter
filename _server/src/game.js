@@ -58,7 +58,6 @@ class Game {
     }
 
     update(delta) {
-        // Object.keys(this.players).map(k => console.log('player' +k, this.players[k].body));
         Matter.Engine.update(this.engine, delta);
     }
 

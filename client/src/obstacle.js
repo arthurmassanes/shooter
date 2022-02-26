@@ -1,5 +1,5 @@
 class Obstacle {
-    constructor(filepath, position, isStatic, restitution, angle) {
+    constructor({ filepath, position, isStatic, restitution, angle }) {
         console.log('Obstacle generated', filepath, position, isStatic, restitution, angle);
         this.width = 0;
         this.height = 0;

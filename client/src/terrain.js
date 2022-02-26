@@ -47,7 +47,7 @@ class Terrain {
                 angle,
             } = obstacle;
             
-            this.obstacles.push(new Obstacle(filepath, position, isStatic, restitution, angle));
+            this.obstacles.push(new Obstacle({ filepath, position, isStatic, restitution, angle }));
         }
         this.isLoading = false;
     }

@@ -44,20 +44,20 @@ class NetworkManager {
         game.setLoop(loop);
 
         socket.emit("newGame", roomId);
+        socket.emit("map", game.getMap());
         return roomId;
     }
 
     joinRoom(socket, roomId) {
         if (this.rooms[roomId]) {
+            const game = this.rooms[roomId];
             socket.roomId = roomId;
             socket.join(roomId);
-            const game = this.rooms[roomId];
             game.addPlayer(socket.id);
             console.log(`socket ${socket.id} joined room ${roomId}, with snapshot:`, game.getSnapshot());
             game.print();
             socket.emit("newGame", roomId);
-            // socket.emit("map", game.getMap());
-            // socket.emit("map", this.rooms[roomId]);
+            socket.emit("map", game.getMap());
         } else {
             socket.roomId = this.createRoom(socket, roomId);
         }

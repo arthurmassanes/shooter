@@ -22,14 +22,14 @@ class TerrainManager {
         this.removeObstacles();
         for (const obstacle of obstacles) {
             const {
+                width, height, position,
                 filepath,
-                position,
                 isStatic,
                 restitution,
                 angle,
             } = obstacle;
-            
-            this.obstacles.push(new Obstacle({ world, filepath, position, isStatic, restitution, angle }));
+
+            this.obstacles.push(new Obstacle({ world, filepath, width, height, position, isStatic, restitution, angle }));
         }
         this.isLoading = false;
     }
