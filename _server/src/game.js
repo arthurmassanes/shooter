@@ -82,6 +82,7 @@ class Game {
 
     delete() {
         // TODO delete objects and ids (key in map)
+        this.terrainManager.removeObstacles();
     }
 }
 

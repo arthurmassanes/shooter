@@ -35,6 +35,7 @@ class Player {
     }
 
     delete(world) {
+        console.log('\x1b[31m- Player deleted\x1b[0m', this.id)
         Matter.World.remove(world, this.body);
     }
 }

@@ -75,8 +75,17 @@ class NetworkManager {
         if (game && roomId) {
             game.removePlayer(socket.id);
             this.io.sockets.emit('deletePlayer', { id: socket.id });
+            console.log("\x1b[34m", `- Client disconnected: ${socket.id}`, "\x1b[0m");
+            this.removeAllEmptyRooms(game);
         }
-        console.log("\x1b[34m", `- Client disconnected: ${socket.id}`, "\x1b[0m");
+    }
+
+    removeAllEmptyRooms(game) {
+        if (Object.keys(game.players).length === 0) {
+            game.delete();
+            delete this.rooms[game.id];
+            console.log(`\x1b[31m- Game ${game.id} deleted\x1b[0m`);
+        } else console.log('Players remaining:', Object.keys(game.players))
     }
 }
 
