@@ -37,7 +37,7 @@ class Game {
 
     update() {
         Engine.update(engine);
-        // this.player.update();
+        this.player.update();
     }
 
     updateGameObjects(data) {

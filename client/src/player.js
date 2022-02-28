@@ -57,6 +57,13 @@ class Player {
     }
 
     update() {
+        if (isPressingLeft()) socket.emit("input", CONTROLS.LEFT);
+        if (isPressingRight()) socket.emit("input", CONTROLS.RIGHT);
+        if (isPressingJump()) socket.emit("input", CONTROLS.UP);
+    }
+
+    // WIP - remove to send only key inputs to server
+    updateLegacy() {
         this.animation.update(this.isSteppingGround);
         this.limitMaxSpeed();
         this.jumpCoolDown++;

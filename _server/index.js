@@ -29,7 +29,10 @@ networkManager.io.on("connection", (socket) => {
         socket.emit("listRooms", roomList);
     });
 
+    // game logic
     socket.on("map", () => networkManager.sendMap(socket));
+    socket.on("input", keyCode => networkManager.handleClientInput(socket, keyCode));
+
 
     // interval
     // socket.emit('players', networkManager.rooms[roomId].players);

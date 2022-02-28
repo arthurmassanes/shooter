@@ -4,6 +4,7 @@ const Player = require('./player')
 
 const TerrainManager = require('./terrainManager');
 
+const CONTROLS = require('./controls');
 const YGRAVITY = 3;
 class Game {
     constructor(id) {
@@ -61,6 +62,15 @@ class Game {
     update(delta) {
         // Object.keys(this.players).map(id => console.log(this.players[id].getData()));
         Matter.Engine.update(this.engine);
+    }
+
+    handleClientInput(socketId, keyCode) {
+        const player = this.players[socketId];
+        // Should not happen
+        if (!player) return;
+
+        if (keyCode == CONTROLS.RIGHT) Matter.Body.applyForce(player.body, player.body.position, { x: player.speed, y: 0 });
+        if (keyCode == CONTROLS.LEFT) Matter.Body.applyForce(player.body, player.body.position, { x: -player.speed, y: 0 });
     }
 
     setLoop(loop) {

@@ -69,6 +69,12 @@ class NetworkManager {
         if (game) socket.emit("map", game.getMap());
     }
 
+    handleClientInput(socket, keyCode) {
+        const game = this.rooms[socket.roomId];
+
+        if (game) game.handleClientInput(socket.id, keyCode);
+    }
+
     disconnect(socket) {
         const roomId = socket.roomId;
         const game = this.rooms[roomId];

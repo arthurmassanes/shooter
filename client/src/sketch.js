@@ -15,6 +15,7 @@ function setup() {
     const canvas = createCanvas(gWidth, gHeight);
     canvas.parent('p5-canvas');
     mgr = new SceneManager();
+    mgr.wire();
 
     // check if joining game
     const params = getURLParams();

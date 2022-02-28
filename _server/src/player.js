@@ -16,6 +16,8 @@ class Player {
         this.health = 100;
         this.height = PLAYER_HEIGHT;
         this.width = PLAYER_HEIGHT;
+        this.speed = 0.25;
+        this.airSpeed = 0.04;
         this.animationState = ANIMATION_STATE.WALK;
         this.body = Matter.Bodies.rectangle(pos.x, pos.y, this.width, this.height, matterPlayerOptions);
         Matter.World.add(world, this.body);
