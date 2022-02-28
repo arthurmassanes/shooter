@@ -25,29 +25,14 @@ class Player {
         this.maxSpeed = 10;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
-        console.log('+ Created player ' + this.id);
     }
 
-    generateRandomColor() {
-        const r = random(255); // r is a random number between 0 - 255
-        const g = random(100,200); // g is a random number betwen 100 - 200
-        const b = random(100); // b is a random number between 0 - 100
-        return "#" + hex(r,2) + hex(g,2) + hex(b,2);
-    }
-
-    // not in current use
-    isMoving() {
-        const vel = this.body.velocity;
-        return (vel.x !== 0 || vel.y !== 0)
-    }
-
-    limitMaxSpeed() {
-        const vel = this.body.velocity;
-
-        vel.x = vel.x >= this.maxSpeed ? this.maxSpeed : vel.x;
-        vel.x = vel.x <= -this.maxSpeed ? -this.maxSpeed : vel.x;
-        Body.setVelocity(this.body, vel);
-    }
+    // generateRandomColor() {
+    //     const r = random(255); // r is a random number between 0 - 255
+    //     const g = random(100,200); // g is a random number betwen 100 - 200
+    //     const b = random(100); // b is a random number between 0 - 100
+    //     return "#" + hex(r, 2) + hex(g, 2) + hex(b, 2);
+    // }
 
     updateFromServer({ position, velocity, health, animationState }) {
         Body.setPosition(this.body, position);
@@ -57,8 +42,14 @@ class Player {
     }
 
     update() {
-        if (isPressingLeft()) socket.emit("input", CONTROLS.LEFT);
-        if (isPressingRight()) socket.emit("input", CONTROLS.RIGHT);
+        if (isPressingLeft()) {
+            socket.emit("input", CONTROLS.LEFT);
+            this.animation.isFacingLeft = true;
+        }
+        if (isPressingRight()) {
+            socket.emit("input", CONTROLS.RIGHT);
+            this.animation.isFacingLeft = false;
+        }
         if (isPressingJump()) socket.emit("input", CONTROLS.UP);
     }
 
