@@ -25,9 +25,6 @@ function setup() {
     } else mgr.showScene(Menu);
 }
 
-function mousePressed() {
-}
-
 function draw() {
     mgr.draw();
 }

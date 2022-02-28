@@ -1,4 +1,5 @@
 const Matter = require('matter-js');
+
 const PLAYER_HEIGHT = 96;
 const matterPlayerOptions = {
     inertia: Infinity, // so it dont rotate
@@ -18,10 +19,22 @@ class Player {
         this.width = PLAYER_HEIGHT;
         this.speed = 0.25;
         this.airSpeed = 0.04;
+        this.jumpCoolDown = 0;
+        this.jumpHeight = 1;
+        this.maxSpeed = 10;
+        this.isSteppingGround = false;
         this.animationState = ANIMATION_STATE.WALK;
         this.body = Matter.Bodies.rectangle(pos.x, pos.y, this.width, this.height, matterPlayerOptions);
         Matter.World.add(world, this.body);
         console.log('+ Created player ' + this.id);
+    }
+
+    limitMaxSpeed() {
+        const vel = this.body.velocity;
+
+        vel.x = vel.x >= this.maxSpeed ? this.maxSpeed : vel.x;
+        vel.x = vel.x <= -this.maxSpeed ? -this.maxSpeed : vel.x;
+        Body.setVelocity(this.body, vel);
     }
 
     getData() {
@@ -32,8 +45,14 @@ class Player {
             position: this.body.position,
             health: this.health,
             animationState: this.animationState,
-            isFacingLeft: true, // TODO: remove later
         })
+    }
+
+    jump() {
+        if (this.body.isSteppingGround) {
+            Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
+            this.body.isSteppingGround = false;
+        }
     }
 
     delete(world) {

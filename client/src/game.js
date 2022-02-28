@@ -63,8 +63,7 @@ class Game {
             } else if (otherPlayer) {
                 otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
             } else {
-                const newPlayer = new OtherPlayer(id, position, velocity, health);
-                this.otherPlayers[id] = newPlayer;
+                this.otherPlayers[id] = new OtherPlayer(id, position, velocity, health);
             }
         });
     }
@@ -84,7 +83,7 @@ class Game {
 
     drawHUD() {
         noStroke();
-        textSize(24);
+        textSize(20);
         fill("white");
         if (this.terrain.isLoading) {
             text(`Loading obstacles...`, 20, 50);
@@ -111,6 +110,7 @@ class Game {
 
         background(41);
         this.terrain.draw();
+        this.drawHUD();
         this.player.draw();
         this.drawOtherPlayers();
 

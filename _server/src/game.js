@@ -27,12 +27,8 @@ class Game {
         Matter.Events.on(this.engine, 'collisionStart', function(event) {
             var pairs = event.pairs || [];
             pairs.forEach(({ bodyA, bodyB }) => {
-                if (bodyA.label == "ground" && bodyB.label == "player"
-                    || bodyA.label == "player" && bodyB.label == "ground"
-                    // || bodyA.label == "player" && bodyB.label == "player"
-                ) {
-                    console.log('collision between player and ground')
-                    // player.isSteppingGround = true;
+                if (bodyB.label == "player" && bodyA.label == "ground") {
+                    bodyB.isSteppingGround = true;
                 }
             });
        });
@@ -71,6 +67,7 @@ class Game {
 
         if (keyCode == CONTROLS.RIGHT) Matter.Body.applyForce(player.body, player.body.position, { x: player.speed, y: 0 });
         if (keyCode == CONTROLS.LEFT) Matter.Body.applyForce(player.body, player.body.position, { x: -player.speed, y: 0 });
+        if (keyCode == CONTROLS.UP) player.jump();
     }
 
     setLoop(loop) {
