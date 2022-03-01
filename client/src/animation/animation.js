@@ -15,7 +15,6 @@ class Animation {
         this.spriteFolder = spriteFolder;
         this.frameCount = 0; // used to reset animation for punch, shoot, etc
 
-        this.loaded = false;
         this.speed = 0.4;
         this.state = state;
         this.isFacingLeft = false;
@@ -52,7 +51,6 @@ class Animation {
             const frame = img.get(x, y, w, h);
             this.frames[animationKey].push(frame);
         });
-        this.loaded = true;
     }
 
     getAnimationFramesByKey(key) {
@@ -65,6 +63,7 @@ class Animation {
 
     getCurrentFrame() {
         const currentAnimation = this.getAnimationFramesByKey(this.state || ANIMATION_STATE.WALK);
+        console.log(this.state)
         if (!currentAnimation) return;
         const animationIndex = Math.abs(round(this.index)) % currentAnimation.length;
 
@@ -85,13 +84,9 @@ class Animation {
         imageMode(CENTER);
         translate(pos.x, pos.y);
         rotate(angle);
-        // flip depending on speed
-        
-        if (this.loaded) {
-            const frame = this.getCurrentFrame();
-            if (this.isFacingLeft) scale(-1, 1);
-            frame && image(frame, 0, 0);
-        }
+        const frame = this.getCurrentFrame();
+        if (this.isFacingLeft) scale(-1, 1);
+        frame && image(frame, 0, 0);
         
         pop();
         this.speed = this.state == ANIMATION_STATE.WALK ? map(vel.x, -10, 10, -5, 5) : this.speed;

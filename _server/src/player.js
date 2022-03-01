@@ -34,7 +34,7 @@ class Player {
 
         vel.x = vel.x >= this.maxSpeed ? this.maxSpeed : vel.x;
         vel.x = vel.x <= -this.maxSpeed ? -this.maxSpeed : vel.x;
-        Body.setVelocity(this.body, vel);
+        Matter.Body.setVelocity(this.body, vel);
     }
 
     getData() {

@@ -22,7 +22,6 @@ class Player {
         this.height = PLAYER_HEIGHT;
         this.width = PLAYER_HEIGHT;
         this.jumpHeight = 1;
-        this.maxSpeed = 10;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
     }
@@ -50,13 +49,16 @@ class Player {
             socket.emit("input", CONTROLS.RIGHT);
             this.animation.isFacingLeft = false;
         }
-        if (isPressingJump()) socket.emit("input", CONTROLS.UP);
+        if (isPressingJump()) {
+            socket.emit("input", CONTROLS.UP);
+            this.isSteppingGround = false;
+        }
+        this.animation.update(this.isSteppingGround);
     }
 
     // WIP - remove to send only key inputs to server
     updateLegacy() {
         this.animation.update(this.isSteppingGround);
-        this.limitMaxSpeed();
         this.jumpCoolDown++;
         const speed = this.isSteppingGround ? this.speed : this.airSpeed;
         if (isPressingLeft()) {

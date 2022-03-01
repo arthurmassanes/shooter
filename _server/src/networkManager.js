@@ -1,4 +1,5 @@
 const http = require("http");
+const { clearGameLoop } = require("node-gameloop");
 const gameloop = require('node-gameloop');
 
 const Game = require('./game');
@@ -88,6 +89,7 @@ class NetworkManager {
 
     removeAllEmptyRooms(game) {
         if (Object.keys(game.players).length === 0) {
+            gameloop.clearGameLoop(game.loop);
             game.delete();
             delete this.rooms[game.id];
             console.log(`\x1b[31m- Game ${game.id} deleted\x1b[0m`);

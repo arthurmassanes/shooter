@@ -68,10 +68,11 @@ class Game {
         if (keyCode == CONTROLS.RIGHT) Matter.Body.applyForce(player.body, player.body.position, { x: player.speed, y: 0 });
         if (keyCode == CONTROLS.LEFT) Matter.Body.applyForce(player.body, player.body.position, { x: -player.speed, y: 0 });
         if (keyCode == CONTROLS.UP) player.jump();
+        player.limitMaxSpeed();
     }
 
     setLoop(loop) {
-        this.loop = loop
+        this.loop = loop;
     }
 
     getSnapshot() {
@@ -88,8 +89,9 @@ class Game {
     }
 
     delete() {
-        // TODO delete objects and ids (key in map)
         this.terrainManager.removeObstacles();
+        Matter.World.clear(this.world);
+        Matter.Engine.clear(this.engine);
     }
 }
 
