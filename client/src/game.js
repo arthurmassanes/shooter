@@ -65,14 +65,13 @@ class Game {
                 position,
                 velocity,
                 health,
-                isFacingLeft,
             } = players[key];
             // local object
             const otherPlayer = this.otherPlayers[id];
             if (id === this.player.id) {
                 this.player.updateFromServer({ position, velocity, health });
             } else if (otherPlayer) {
-                otherPlayer.update(position, velocity, health, isFacingLeft);
+                otherPlayer.update(position, velocity, health);
             } else {
                 this.otherPlayers[id] = new OtherPlayer(id, position, velocity, health);
             }

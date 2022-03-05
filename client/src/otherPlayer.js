@@ -13,18 +13,20 @@ class OtherPlayer {
         this.body.isSteppingGround = false;
     }
 
-    update(position, velocity, health, isFacingLeft) {
-        this.animation.isFacingLeft = isFacingLeft;
+    update(position, velocity, health) {
         this.health = health;
 
         Body.setVelocity(this.body, velocity);
-        Body.setPosition(this.body, position);
+        Body.setPosition(this.body, position);        
         if (velocity.y <= -1) this.body.isSteppingGround = false;
+        if (velocity.x <= -1) this.animation.isFacingLeft = true;
+        else if (velocity.x >= 1) this.animation.isFacingLeft = false;
     }
 
     draw() {
         this.animation.update(this.body.isSteppingGround);
         const pos = this.body.position;
+
         this.animation.draw(pos, this.body.angle, this.body.velocity);
         this.healthBar.draw(pos, this.health);
     }
