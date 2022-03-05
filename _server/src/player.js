@@ -9,8 +9,6 @@ const matterPlayerOptions = {
     density: 0.002
 };
 
-const ANIMATION_STATE = require('./constants/animation');
-
 class Player {
     constructor(world, id, pos = { x: 200, y:  0 }) {
         this.id = id;
@@ -23,7 +21,6 @@ class Player {
         this.jumpHeight = 1;
         this.maxSpeed = 10;
         this.isSteppingGround = false;
-        this.animationState = ANIMATION_STATE.WALK;
         this.body = Matter.Bodies.rectangle(pos.x, pos.y, this.width, this.height, matterPlayerOptions);
         Matter.World.add(world, this.body);
         console.log('+ Created player ' + this.id);
@@ -44,7 +41,6 @@ class Player {
             velocity: this.body.velocity,
             position: this.body.position,
             health: this.health,
-            animationState: this.animationState,
         })
     }
 

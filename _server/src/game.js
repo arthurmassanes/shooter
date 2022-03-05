@@ -27,9 +27,10 @@ class Game {
         Matter.Events.on(this.engine, 'collisionStart', function(event) {
             var pairs = event.pairs || [];
             pairs.forEach(({ bodyA, bodyB }) => {
-                if (bodyB.label == "player" && bodyA.label == "ground") {
+                if (bodyB.label == "player" && bodyA.label == "ground")
                     bodyB.isSteppingGround = true;
-                }
+                else if (bodyA.label == "player" && bodyB.label == "ground")
+                    bodyA.isSteppingGround = true;
             });
        });
        console.log('collision ready')
