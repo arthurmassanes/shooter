@@ -13,15 +13,27 @@ class Game {
         // physics engine
         engine = Engine.create();
         world = engine.world;
+        this.initCollisions();
         world.gravity.y = YGRAVITY;
 
         this.connectionError = false;
         this.player = new Player();
         this.terrain = new Terrain(this.player);
         this.otherPlayers = {} // map of OtherPlayers, using id as key
-        console.log(this.terrain.obstacles.length, world.gravity);
-
+        
         this.setupSocket();
+    }
+
+    initCollisions() {
+        Matter.Events.on(engine, 'collisionStart', function(event) {
+            const pairs = event.pairs || [];
+            pairs.forEach(({ bodyA, bodyB }) => {
+                if (bodyB.label == "player" && bodyA.label == "ground")
+                    bodyB.isSteppingGround = true;
+                else if (bodyA.label == "player" && bodyB.label == "ground")
+                    bodyA.isSteppingGround = true;
+            });
+     });
     }
 
     setupSocket() {
@@ -34,7 +46,7 @@ class Game {
 
         // setInterval(() => this.player.heartbeat(), playerRefreshInterval);
     }
-
+    
     update() {
         Engine.update(engine);
         this.player.update();
@@ -53,15 +65,14 @@ class Game {
                 position,
                 velocity,
                 health,
-                animationState,
                 isFacingLeft,
             } = players[key];
             // local object
             const otherPlayer = this.otherPlayers[id];
             if (id === this.player.id) {
-                this.player.updateFromServer({ position, velocity, health, animationState });
+                this.player.updateFromServer({ position, velocity, health });
             } else if (otherPlayer) {
-                otherPlayer.update(position, velocity, health, isFacingLeft, animationState);
+                otherPlayer.update(position, velocity, health, isFacingLeft);
             } else {
                 this.otherPlayers[id] = new OtherPlayer(id, position, velocity, health);
             }
@@ -87,9 +98,7 @@ class Game {
         fill("white");
         if (this.terrain.isLoading) {
             text(`Loading obstacles...`, 20, 50);
-            world.gravity.y = 0;
         } else {
-            world.gravity.y = YGRAVITY;
             stroke(50);
             strokeWeight(3);
             text(`connected players: ${Object.keys(this.otherPlayers).length + 1}`, 20, 20);
@@ -110,9 +119,9 @@ class Game {
 
         background(41);
         this.terrain.draw();
+        this.drawOtherPlayers();
         this.drawHUD();
         this.player.draw();
-        this.drawOtherPlayers();
 
     }
 }

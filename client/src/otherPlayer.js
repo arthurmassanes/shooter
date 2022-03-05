@@ -6,23 +6,24 @@ class OtherPlayer {
         this.healthBar = new HealthBar();
         this.width = PLAYER_HEIGHT;
         this.height = PLAYER_HEIGHT;
-        const options = { ...matterPlayerOptions, label: 'player ' + id }
+        const options = { ...matterPlayerOptions, label: 'player' }
         this.body = Bodies.rectangle(position.x, position.y, this.width, this.height, options);
         if (velocity) Body.setVelocity(this.body, velocity);
         World.add(world, this.body);
-        console.log('other player joined:', this.id, this.body);
+        this.body.isSteppingGround = false;
     }
 
-    update(position, velocity, health, isFacingLeft, animationState) {
-        this.animation.state = animationState;
+    update(position, velocity, health, isFacingLeft) {
         this.animation.isFacingLeft = isFacingLeft;
         this.health = health;
 
         Body.setVelocity(this.body, velocity);
         Body.setPosition(this.body, position);
+        if (velocity.y <= -1) this.body.isSteppingGround = false;
     }
 
     draw() {
+        this.animation.update(this.body.isSteppingGround);
         const pos = this.body.position;
         this.animation.draw(pos, this.body.angle, this.body.velocity);
         this.healthBar.draw(pos, this.health);

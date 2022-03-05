@@ -63,7 +63,6 @@ class Animation {
 
     getCurrentFrame() {
         const currentAnimation = this.getAnimationFramesByKey(this.state || ANIMATION_STATE.WALK);
-        console.log(this.state)
         if (!currentAnimation) return;
         const animationIndex = Math.abs(round(this.index)) % currentAnimation.length;
 

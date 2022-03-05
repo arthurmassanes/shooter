@@ -5,7 +5,6 @@ const matterPlayerOptions = {
     frictionAir: 0.05,
     friction: 0.5,
     density: 0.002,
-    isStatic: true,
 };
 
 class Player {
@@ -16,7 +15,6 @@ class Player {
         this.healthBar = new HealthBar();
         this.options = matterPlayerOptions;
         this.jumpCoolDown = 0;
-        this.isSteppingGround = false;
         this.speed = 0.25;
         this.airSpeed = 0.04;
         this.height = PLAYER_HEIGHT;
@@ -33,11 +31,10 @@ class Player {
     //     return "#" + hex(r, 2) + hex(g, 2) + hex(b, 2);
     // }
 
-    updateFromServer({ position, velocity, health, animationState }) {
+    updateFromServer({ position, velocity, health }) {
         Body.setPosition(this.body, position);
         Body.setVelocity(this.body, velocity);
         this.health = health;
-        this.animation.state = animationState;
     }
 
     update() {
@@ -51,9 +48,9 @@ class Player {
         }
         if (isPressingJump()) {
             socket.emit("input", CONTROLS.UP);
-            this.isSteppingGround = false;
+            this.body.isSteppingGround = false;
         }
-        this.animation.update(this.isSteppingGround);
+        this.animation.update(this.body.isSteppingGround);
     }
 
     // WIP - remove to send only key inputs to server
