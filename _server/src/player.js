@@ -18,7 +18,7 @@ class Player {
         this.speed = 0.25;
         this.airSpeed = 0.04;
         this.jumpCoolDown = 0;
-        this.jumpHeight = 1;
+        this.jumpHeight = 1.1;
         this.maxSpeed = 10;
         this.isSteppingGround = false;
         this.body = Matter.Bodies.rectangle(pos.x, pos.y, this.width, this.height, matterPlayerOptions);

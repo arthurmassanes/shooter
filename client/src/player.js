@@ -19,7 +19,7 @@ class Player {
         this.airSpeed = 0.04;
         this.height = PLAYER_HEIGHT;
         this.width = PLAYER_HEIGHT;
-        this.jumpHeight = 1;
+        this.jumpHeight = 1.1;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
     }

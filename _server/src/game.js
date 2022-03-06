@@ -5,7 +5,8 @@ const Player = require('./player')
 const TerrainManager = require('./terrainManager');
 
 const CONTROLS = require('./controls');
-const YGRAVITY = 3;
+const { YGRAVITY } = require('./constants/game');
+
 class Game {
     constructor(id) {
         this.id = id;
