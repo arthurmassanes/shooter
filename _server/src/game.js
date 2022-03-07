@@ -10,7 +10,7 @@ const { YGRAVITY } = require('./constants/game');
 class Game {
     constructor(id) {
         this.id = id;
-        this.FPS = 60;
+        this.FPS = 30;
         this.tick = 0;
         this.engine = Matter.Engine.create();
         this.world = this.engine.world;

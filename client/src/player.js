@@ -48,7 +48,10 @@ class Player {
         }
         if (isPressingJump()) {
             socket.emit("input", CONTROLS.UP);
-            this.body.isSteppingGround = false;
+            if (this.body.isSteppingGround) {
+                Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
+                this.body.isSteppingGround = false;
+            }    
         }
         this.animation.update(this.body.isSteppingGround);
     }
