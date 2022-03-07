@@ -27,6 +27,6 @@ class Menu {
     }
 
     draw() {
-        background(42);
+        background('lightblue');
     }
 }
