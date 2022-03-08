@@ -16,8 +16,6 @@ class Player {
         this.height = PLAYER_HEIGHT;
         this.width = PLAYER_HEIGHT;
         this.speed = 0.25;
-        this.airSpeed = 0.04;
-        this.jumpCoolDown = 0;
         this.jumpHeight = 1.1;
         this.maxSpeed = 10;
         this.isSteppingGround = false;

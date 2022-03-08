@@ -14,12 +14,11 @@ class Player {
         this.health = 100;
         this.healthBar = new HealthBar();
         this.options = matterPlayerOptions;
-        this.jumpCoolDown = 0;
-        this.speed = 0.25;
-        this.airSpeed = 0.04;
         this.height = PLAYER_HEIGHT;
         this.width = PLAYER_HEIGHT;
+        this.speed = 0.25;
         this.jumpHeight = 1.1;
+        this.maxSpeed = 10;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
     }
@@ -41,10 +40,12 @@ class Player {
         if (isPressingLeft()) {
             socket.emit("input", CONTROLS.LEFT);
             this.animation.isFacingLeft = true;
+            Body.applyForce(this.body, this.body.position, { x: -this.speed, y: 0 });
         }
         if (isPressingRight()) {
             socket.emit("input", CONTROLS.RIGHT);
             this.animation.isFacingLeft = false;
+            Body.applyForce(this.body, this.body.position, { x: this.speed, y: 0 });
         }
         if (isPressingJump()) {
             socket.emit("input", CONTROLS.UP);
@@ -54,55 +55,15 @@ class Player {
             }    
         }
         this.animation.update(this.body.isSteppingGround);
+        this.limitMaxSpeed();
     }
 
-    // WIP - remove to send only key inputs to server
-    updateLegacy() {
-        this.animation.update(this.isSteppingGround);
-        this.jumpCoolDown++;
-        const speed = this.isSteppingGround ? this.speed : this.airSpeed;
-        if (isPressingLeft()) {
-            Body.applyForce(this.body, this.body.position, { x: -speed, y: 0 });
-            this.animation.isFacingLeft = true;
-        }
-        if (isPressingRight()) {
-            this.animation.isFacingLeft = false;
-            Body.applyForce(this.body, this.body.position, { x: speed, y: 0 });
-        }
+    limitMaxSpeed() {
+        const vel = this.body.velocity;
 
-        // const isCollidingWithGround = Matter.SAT.collides(this.body, terrain.ground.body).collided;
-        if (isPressingJump() && this.isSteppingGround
-            // limit jump to twice per second
-            && this.jumpCoolDown >= FPS / 2
-        ) {
-            this.isSteppingGround = false;
-            Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
-            this.jumpCoolDown = 0;
-        }
-        if (isPressingPunch()) {
-            this.animation.play(ANIMATION_STATE.PUNCH, 1); // play punch animation once
-        }
-        // this.stayInScreen();
-    }
-
-    // constrain the player to the screen
-    stayInScreen() {
-        const halfBody = this.width / 2;
-
-        // left and right
-        if (this.body.position.x <= 0 + halfBody) {
-            Body.setPosition(this.body, { x: 0 + halfBody, y: this.body.position.y });
-        } else if (this.body.position.x >= gWidth - halfBody) {
-            Body.setPosition(this.body, { x: gWidth - halfBody, y: this.body.position.y });
-        }
-        // bottom of screen -> respawn
-        if (this.body.position.y >= gHeight * 2) this.respawn();
-    }
-
-    respawn() {
-        const pos = { x: 200, y: 100 };
-        this.health -= 10;
-        Body.setPosition(this.body, pos);
+        vel.x = vel.x >= this.maxSpeed ? this.maxSpeed : vel.x;
+        vel.x = vel.x <= -this.maxSpeed ? -this.maxSpeed : vel.x;
+        Matter.Body.setVelocity(this.body, vel);
     }
 
     draw() {

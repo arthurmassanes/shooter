@@ -48,8 +48,8 @@ class Game {
     }
     
     update() {
-        Engine.update(engine);
         this.player.update();
+        Engine.update(engine);
     }
 
     updateGameObjects(data) {
