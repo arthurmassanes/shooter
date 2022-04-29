@@ -1,9 +1,10 @@
 const spritesFolders = {
-    COWBOY: "assets/animations/cowboy/"
+    COWBOY: "assets/animations/cowboy/",
+    YELLOW: "assets/animations/yellow", // The yellow cowboy skin
 }
 
 class Animation {
-    constructor(spriteFolder = spritesFolders.COWBOY, state = ANIMATION_STATE.WALK) {
+    constructor(spriteFolder = spritesFolders.YELLOW, state = ANIMATION_STATE.WALK) {
         this.frames = {
             WALK: [],
             JUMP: [],
