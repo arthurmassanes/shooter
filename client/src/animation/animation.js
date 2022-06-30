@@ -89,7 +89,7 @@ class Animation {
         frame && image(frame, 0, 0);
         
         pop();
-        this.speed = this.state == ANIMATION_STATE.WALK ? map(vel.x, -10, 10, -5, 5) : this.speed;
+        this.speed = this.state == ANIMATION_STATE.WALK ? map(vel.x, -10, 10, -1, 1) : this.speed;
         this.index += this.speed;
     }
 }
