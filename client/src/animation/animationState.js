@@ -5,6 +5,6 @@ const ANIMATION_STATE = {
 }
 
 const ANIMATION_SPEEDS = {
-    JUMP: 0.4,
+    JUMP: 0,
     PUNCH: 1
 }

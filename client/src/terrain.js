@@ -1,7 +1,7 @@
 
 // Terrain generator
 class Terrain {
-    constructor(player) {
+    constructor() {
         this.backgroundImage = undefined;
         this.obstacles = [];
         this.mapLabel = ""; // Every map has a label but its more for debug

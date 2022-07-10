@@ -23,7 +23,7 @@ class Animation {
         this.loadSprite(spriteFolder);
     }
     
-    async loadSprite(spriteFolder) {
+    loadSprite(spriteFolder) {
         Object.keys(ANIMATION_STATE).map(key => {
             const animationLabel = ANIMATION_STATE[key];
             // get the frames from spritesheet using json data
