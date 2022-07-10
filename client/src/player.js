@@ -54,6 +54,10 @@ class Player {
                 this.body.isSteppingGround = false;
             }    
         }
+        if (isPressingPunch()) {
+            this.animation.play(ANIMATION_STATE.PUNCH);
+            socket.emit("input", CONTROLS.PUNCH);
+        }
         this.animation.update(this.body.isSteppingGround);
         this.limitMaxSpeed();
     }

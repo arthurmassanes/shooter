@@ -35,7 +35,7 @@ class Animation {
     }
     
     // play an animation animationState a with certain amount of repeat
-    play(animationState, times) {
+    play(animationState, times = 1) {
         const animation = this.getAnimationFramesByKey(animationState);
 
         if (animation) {

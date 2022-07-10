@@ -70,6 +70,7 @@ class Game {
         if (keyCode == CONTROLS.RIGHT) Matter.Body.applyForce(player.body, player.body.position, { x: player.speed, y: 0 });
         if (keyCode == CONTROLS.LEFT) Matter.Body.applyForce(player.body, player.body.position, { x: -player.speed, y: 0 });
         if (keyCode == CONTROLS.UP) player.jump();
+        if (keyCode == CONTROLS.PUNCH) player.punch();
         player.limitMaxSpeed();
     }
 
