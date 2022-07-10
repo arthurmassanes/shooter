@@ -1,5 +1,4 @@
 const http = require("http");
-const { clearGameLoop } = require("node-gameloop");
 const gameloop = require('node-gameloop');
 
 const Game = require('./game');
