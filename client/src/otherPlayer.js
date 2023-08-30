@@ -13,7 +13,7 @@ class OtherPlayer {
         this.body.isSteppingGround = false;
     }
 
-    update(position, velocity, health) {
+    update(position, velocity, health, isPunching) {
         this.health = health;
 
         Body.setVelocity(this.body, velocity);
@@ -21,6 +21,7 @@ class OtherPlayer {
         if (velocity.y <= -1) this.body.isSteppingGround = false;
         if (velocity.x <= -1) this.animation.isFacingLeft = true;
         else if (velocity.x >= 1) this.animation.isFacingLeft = false;
+        if (isPunching === true) this.animation.play(ANIMATION_STATE.PUNCH);
     }
 
     draw() {

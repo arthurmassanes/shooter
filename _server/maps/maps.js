@@ -24,7 +24,7 @@ module.exports = {
                     height: 99,
                     isStatic: true,
                     // angle: 0,
-                },
+                }
             ]
         },
 

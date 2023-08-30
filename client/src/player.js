@@ -19,6 +19,8 @@ class Player {
         this.speed = 0.25;
         this.jumpHeight = 1.1;
         this.maxSpeed = 10;
+        this.canPunch = true;
+        this.PUNCH_TIMEOUT = 500;
         this.body = Bodies.rectangle(x, y, this.width, this.height, this.options);
         World.add(world, this.body);
     }
@@ -54,9 +56,11 @@ class Player {
                 this.body.isSteppingGround = false;
             }    
         }
-        if (isPressingPunch()) {
+        if (isPressingPunch() && this.canPunch) {
+            this.canPunch = false;
             this.animation.play(ANIMATION_STATE.PUNCH);
             socket.emit("input", CONTROLS.PUNCH);
+            setTimeout(() => { this.canPunch = true; }, this.PUNCH_TIMEOUT);
         }
         this.animation.update(this.body.isSteppingGround);
         this.limitMaxSpeed();

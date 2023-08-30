@@ -33,7 +33,7 @@ class Game {
                 else if (bodyA.label == "player" && bodyB.label == "ground")
                     bodyA.isSteppingGround = true;
             });
-     });
+        });
     }
 
     setupSocket() {
@@ -65,13 +65,14 @@ class Game {
                 position,
                 velocity,
                 health,
+                isPunching
             } = players[key];
             // local object
             const otherPlayer = this.otherPlayers[id];
             if (id === this.player.id) {
                 this.player.updateFromServer({ position, velocity, health });
             } else if (otherPlayer) {
-                otherPlayer.update(position, velocity, health);
+                otherPlayer.update(position, velocity, health, isPunching);
             } else {
                 this.otherPlayers[id] = new OtherPlayer(id, position, velocity, health);
             }

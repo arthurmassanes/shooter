@@ -33,8 +33,22 @@ class Game {
                 else if (bodyA.label == "player" && bodyB.label == "ground")
                     bodyA.isSteppingGround = true;
             });
-       });
-       console.log('collision ready')
+        });
+        Matter.Events.on(this.engine, 'collisionActive', function(event) {
+            var pairs = event.pairs || [];
+            pairs.forEach(({ bodyA, bodyB, collision }) => {
+                if (bodyA.label == "player" && bodyB.label == "player") {
+                    if (bodyA.isPunching && bodyA.canPunch) {
+                        bodyA.canPunch = false;
+                        bodyB.health -= 10;
+                    }
+                    if (bodyB.isPunching && bodyB.canPunch) {
+                        bodyA.health -= 10;
+                        bodyB.canPunch = false;
+                    }
+                }
+            });
+        });
     }
 
     addPlayer(playerId) {
@@ -79,7 +93,8 @@ class Game {
     }
 
     getSnapshot() {
-        // TODO add all info here about non static objects
+        // TODO add all info here about non static objects (EX: bullets, moving obstacles)
+        // TODO dont send data if no movement was processed
 
         // Convert map of class instance to JSON
         const players = {};

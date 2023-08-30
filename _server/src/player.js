@@ -12,14 +12,17 @@ const matterPlayerOptions = {
 class Player {
     constructor(world, id, pos = { x: 200, y:  0 }) {
         this.id = id;
-        this.health = 100;
         this.height = PLAYER_HEIGHT;
         this.width = PLAYER_HEIGHT;
         this.speed = 0.25;
         this.jumpHeight = 1.1;
         this.maxSpeed = 10;
-        this.isSteppingGround = false;
         this.body = Matter.Bodies.rectangle(pos.x, pos.y, this.width, this.height, matterPlayerOptions);
+        this.body.isSteppingGround = null;
+        this.body.isPunching = false;
+        this.body.canPunch = true;
+        this.body.health = 100;
+        this.PUNCH_TIMEOUT = 500;
         Matter.World.add(world, this.body);
         console.log('+ Created player ' + this.id);
     }
@@ -38,18 +41,27 @@ class Player {
             width: this.width, height: this.height,
             velocity: this.body.velocity,
             position: this.body.position,
-            health: this.health,
+            health: this.body.health,
+            isPunching: this.body.isPunching
         })
     }
+
+    punch() {
+        if (!this.body.isPunching && this.body.canPunch) {
+            this.body.isPunching = true;
+            setTimeout(() => {
+                this.body.isPunching = false;
+                this.body.canPunch = true;
+            }, this.PUNCH_TIMEOUT);
+        }
+    }
+
 
     jump() {
         if (this.body.isSteppingGround) {
             Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -this.jumpHeight });
             this.body.isSteppingGround = false;
         }
-    }
-
-    punch() {
     }
 
     delete(world) {
