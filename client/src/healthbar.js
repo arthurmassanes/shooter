@@ -4,6 +4,8 @@ class HealthBar {
     }
 
     draw(position, health) {
+        if (health <= 0) return;
+
         var { x, y } = position;
         y -= 65; // above head
         push();

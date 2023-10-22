@@ -28,7 +28,7 @@ class OtherPlayer {
         this.animation.update(this.body.isSteppingGround);
         const pos = this.body.position;
 
-        this.animation.draw(pos, this.body.angle, this.body.velocity);
+        this.animation.draw(pos, this.body.angle, this.body.velocity, this.health);
         this.healthBar.draw(pos, this.health);
     }
 

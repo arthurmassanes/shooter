@@ -79,13 +79,14 @@ class Animation {
         this.speed = this.getAnimationSpeedByKey(this.state);
     }
 
-    draw(pos, angle, vel) {
+    draw(pos, angle, vel, health) {
         push();
         imageMode(CENTER);
         translate(pos.x, pos.y);
         rotate(angle);
         const frame = this.getCurrentFrame();
         if (this.isFacingLeft) scale(-1, 1);
+        if (health <= 0) tint(255, 127);
         frame && image(frame, 0, 0);
         
         pop();

@@ -39,6 +39,8 @@ class Player {
     }
 
     update() {
+        if (this.health <= 0) return;
+
         if (isPressingLeft()) {
             socket.emit("input", CONTROLS.LEFT);
             this.animation.isFacingLeft = true;
@@ -75,7 +77,7 @@ class Player {
     }
 
     draw() {
-        this.animation.draw(this.body.position, this.body.angle, this.body.velocity);
+        this.animation.draw(this.body.position, this.body.angle, this.body.velocity, this.health);
         this.healthBar.draw(this.body.position, this.health);
     }
 }

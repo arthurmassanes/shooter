@@ -72,14 +72,12 @@ class Game {
     }
 
     update(delta) {
-        // Object.keys(this.players).map(id => console.log(this.players[id].getData()));
         Matter.Engine.update(this.engine);
     }
 
     handleClientInput(socketId, keyCode) {
         const player = this.players[socketId];
-        // Should not happen
-        if (!player) return;
+        if (!player || player.body.health <= 0) return;
 
         if (keyCode == CONTROLS.RIGHT) Matter.Body.applyForce(player.body, player.body.position, { x: player.speed, y: 0 });
         if (keyCode == CONTROLS.LEFT) Matter.Body.applyForce(player.body, player.body.position, { x: -player.speed, y: 0 });
@@ -98,7 +96,10 @@ class Game {
 
         // Convert map of class instance to JSON
         const players = {};
-        Object.entries(this.players).forEach(([key, value]) => players[key] = value.getData());
+        Object.entries(this.players).forEach(([key, value]) => {
+            const player = value.getData();
+            players[key] = player;
+        });
         return ({ players });
     }
 
